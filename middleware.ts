@@ -8,7 +8,7 @@ const locales = ["en", "es"]
 const defaultLocale = "es"
 
 // Función para obtener el idioma preferido del usuario
-function getLocale(request: NextRequest) {
+function getLocale(request: NextRequest): string {
   // Negotiator espera un objeto con headers
   const headers = new Headers(request.headers)
   const acceptLanguage = headers.get("accept-language") || ""
@@ -36,7 +36,7 @@ export function middleware(request: NextRequest) {
   const pathnameHasLocale = locales.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
 
   // Si ya tiene un locale, no hacer nada
-  if (pathnameHasLocale) return
+  if (pathnameHasLocale) return NextResponse.next()
 
   // Si no tiene locale y no es una ruta especial, redirigir a la ruta con el locale detectado
   if (
@@ -46,9 +46,11 @@ export function middleware(request: NextRequest) {
     !pathname.includes(".")
   ) {
     const locale = getLocale(request)
-    request.nextUrl.pathname = `/${locale}${pathname}`
-    return NextResponse.redirect(request.nextUrl)
+    const newUrl = new URL(`/${locale}${pathname}`, request.url)
+    return NextResponse.redirect(newUrl)
   }
+
+  return NextResponse.next()
 }
 
 export const config = {

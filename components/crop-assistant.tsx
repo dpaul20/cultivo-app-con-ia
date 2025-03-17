@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
-// Actualizar la importación del AssistantAvatar
 import { AssistantAvatar } from "@/components/custom/assistant-avatar"
 
 type Message = {
@@ -18,7 +17,7 @@ type Message = {
 }
 
 // Respuestas mejoradas para el asistente
-const enhancedResponses = {
+const enhancedResponses: Record<string, Record<string, string>> = {
   tomato: {
     en: "Tomatoes grow well with basil, onions, carrots, and garlic. Basil improves tomato flavor and repels insects, while onions and garlic prevent pests. Avoid planting them near potatoes (they can transmit diseases to each other), fennel (inhibits tomato growth), or cabbage family plants (compete for nutrients).",
     es: "Los tomates crecen bien junto a albahaca, cebolla, zanahoria y ajo. La albahaca mejora el sabor del tomate y repele insectos, mientras que las cebollas y el ajo previenen plagas. Evita plantarlos cerca de papas (pueden transmitirse enfermedades), hinojo (inhibe el crecimiento del tomate) o plantas de la familia del repollo (compiten por nutrientes).",
@@ -31,10 +30,14 @@ const enhancedResponses = {
     en: "Carrots grow well with tomatoes, onions, leeks, and rosemary. Tomatoes release solanine which protects carrots from pests, while rosemary repels carrot fly with its strong aroma. Avoid planting them near dill, which can cross-pollinate with carrots and reduce their quality, or other root vegetables that compete for space and nutrients.",
     es: "Las zanahorias crecen bien con tomates, cebollas, puerros y romero. Los tomates liberan solanina que protege a las zanahorias de plagas, mientras que el romero repele la mosca de la zanahoria con su fuerte aroma. Evita plantarlas cerca de eneldo, que puede polinizar cruzadamente con las zanahorias y reducir su calidad, u otras hortalizas de raíz que compiten por espacio y nutrientes.",
   },
+  general: {
+    en: "Companion planting is a gardening technique that involves planting different species together for mutual benefit. Some plants repel pests, others improve flavor, and some help maximize space. For example, the Three Sisters (corn, beans, and squash) is a traditional companion planting where corn provides support for beans, beans fix nitrogen, and squash provides ground cover.",
+    es: "La asociación de cultivos es una técnica de jardinería que consiste en plantar diferentes especies juntas para beneficio mutuo. Algunas plantas repelen plagas, otras mejoran el sabor, y otras ayudan a maximizar el espacio. Por ejemplo, las tres hermanas (maíz, frijoles y calabaza) es una asociación tradicional donde el maíz proporciona soporte para los frijoles, los frijoles fijan nitrógeno, y la calabaza proporciona cobertura del suelo.",
+  },
 }
 
 // Función para detectar el cultivo en el texto
-function detectCrop(text: string, lang: string): string | null {
+function detectCrop(text: string): string | null {
   const lowerText = text.toLowerCase()
 
   // Detectar tomate
@@ -102,18 +105,9 @@ export default function CropAssistant({
 
   // Función para generar una respuesta más detallada
   const generateEnhancedResponse = (cropType: string): string => {
-    if (cropType === "tomato" || cropType === "lettuce" || cropType === "carrot") {
+    if (cropType === "tomato" || cropType === "lettuce" || cropType === "carrot" || cropType === "general") {
       return enhancedResponses[cropType][lang === "es" ? "es" : "en"]
     }
-
-    if (cropType === "general") {
-      if (lang === "es") {
-        return "La asociación de cultivos es una técnica de jardinería que consiste en plantar diferentes especies juntas para beneficio mutuo. Algunas plantas repelen plagas, otras mejoran el sabor, y otras ayudan a maximizar el espacio. Por ejemplo, las tres hermanas (maíz, frijoles y calabaza) es una asociación tradicional donde el maíz proporciona soporte para los frijoles, los frijoles fijan nitrógeno, y la calabaza proporciona cobertura del suelo."
-      } else {
-        return "Companion planting is a gardening technique that involves planting different species together for mutual benefit. Some plants repel pests, others improve flavor, and some help maximize space. For example, the Three Sisters (corn, beans, and squash) is a traditional companion planting where corn provides support for beans, beans fix nitrogen, and squash provides ground cover."
-      }
-    }
-
     return messages.defaultResponse
   }
 
@@ -122,12 +116,12 @@ export default function CropAssistant({
 
     // Add user message
     const userMessage: Message = { role: "user", content: input }
-    setChatMessages([...chatMessages, userMessage])
+    setChatMessages((prev) => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
 
     // Detectar el cultivo en la consulta
-    const cropType = detectCrop(input, lang)
+    const cropType = detectCrop(input)
 
     // Simular AI response con un retraso
     setTimeout(() => {
