@@ -1,0 +1,170 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "plantDatabase": "Base de Plantas",
+    "gardenPlanner": "Planificador",
+    "growthTracker": "Seguimiento",
+    "calendar": "Calendario de Siembra",
+    "about": "Acerca de",
+    "signIn": "Iniciar Sesión"
+  },
+  "hero": {
+    "title": "Cultiva Mejor en Compañía",
+    "subtitle": "Descubre las plantas compañeras perfectas para tu huerto con nuestro asistente de asociación de cultivos con IA.",
+    "searchPlaceholder": "Busca un cultivo (ej., tomate)",
+    "findCompanions": "Buscar Compañeros"
+  },
+  "howItWorks": {
+    "title": "Cómo Funciona",
+    "subtitle": "Nuestra app con IA te ayuda a crear el huerto perfecto sugiriendo plantas compañeras que crecen bien juntas.",
+    "step1": {
+      "title": "1. Selecciona tus Cultivos",
+      "description": "Elige las plantas que quieres cultivar en tu huerto."
+    },
+    "step2": {
+      "title": "2. Obtén Recomendaciones de IA",
+      "description": "Nuestra IA sugiere las mejores plantas compañeras basadas en datos científicos."
+    },
+    "step3": {
+      "title": "3. Planifica tu Huerto",
+      "description": "Organiza tus plantas de manera óptima usando nuestro planificador interactivo."
+    }
+  },
+  "cropAssistant": {
+    "title": "Asistente de Cultivos",
+    "description": "Pregúntame sobre qué plantas crecen bien juntas",
+    "placeholder": "Pregunta sobre asociación de cultivos...",
+    "welcomeMessage": "¡Hola! Soy tu asistente de asociación de cultivos. ¿Qué plantas estás cultivando o planeas cultivar?",
+    "tomatoResponse": "Los tomates crecen bien junto a albahaca, cebolla, zanahoria y ajo. Evita plantarlos cerca de papas, hinojo o repollo.",
+    "lettuceResponse": "La lechuga se beneficia de estar cerca de zanahorias, rábanos, pepinos y fresas. Mantén alejada de los girasoles.",
+    "carrotResponse": "Las zanahorias crecen bien con tomates, cebollas, puerros y romero. Evita plantarlas cerca de eneldo.",
+    "defaultResponse": "Para darte recomendaciones específicas, necesito saber qué cultivo te interesa. ¿Podrías mencionar alguna planta específica como tomate, lechuga o zanahoria?"
+  },
+  "popularCrops": {
+    "title": "Cultivos Populares",
+    "description": "Información sobre asociaciones de cultivos comunes",
+    "benefits": "Beneficios",
+    "goodCompanions": "Buenos Compañeros",
+    "badCompanions": "Malos Compañeros",
+    "tomato": {
+      "name": "Tomate",
+      "benefits": "La albahaca mejora el sabor y repele insectos. Las cebollas y el ajo previenen plagas.",
+      "good": ["Albahaca", "Cebolla", "Zanahoria", "Ajo", "Perejil"],
+      "bad": ["Papa", "Hinojo", "Repollo", "Maíz"]
+    },
+    "lettuce": {
+      "name": "Lechuga",
+      "benefits": "Crece bien con plantas de raíz que no compiten por nutrientes en la misma capa de suelo.",
+      "good": ["Zanahoria", "Rábano", "Pepino", "Fresa", "Cebolla"],
+      "bad": ["Girasol", "Brócoli"]
+    },
+    "carrot": {
+      "name": "Zanahoria",
+      "benefits": "Los tomates liberan solanina que protege a las zanahorias de plagas. El romero repele la mosca de la zanahoria.",
+      "good": ["Tomate", "Cebolla", "Puerro", "Romero", "Lechuga"],
+      "bad": ["Eneldo", "Perejil", "Apio"]
+    }
+  },
+  "footer": {
+    "rights": "© 2025 CultivAI. Todos los derechos reservados.",
+    "terms": "Términos",
+    "privacy": "Privacidad",
+    "contact": "Contacto"
+  },
+  "gardenPlanner": {
+    "title": "Planificador Interactivo de Huerto",
+    "subtitle": "Diseña tu huerto arrastrando y soltando plantas",
+    "newGarden": "Nuevo Huerto",
+    "saveGarden": "Guardar Huerto",
+    "loadGarden": "Cargar Huerto",
+    "gardenName": "Nombre del Huerto",
+    "width": "Ancho (m)",
+    "height": "Alto (m)",
+    "createGarden": "Crear Huerto",
+    "dragPlants": "Arrastra plantas a tu huerto",
+    "clearGarden": "Limpiar Huerto",
+    "plantList": "Lista de Plantas",
+    "gardenTools": "Herramientas",
+    "addBed": "Añadir Bancal",
+    "addPath": "Añadir Camino",
+    "rotate": "Rotar",
+    "delete": "Eliminar",
+    "noGarden": "Aún no has creado un huerto. ¡Crea uno nuevo para empezar a planificar!",
+    "companionInfo": "Info de Plantas Compañeras",
+    "goodWith": "Buenas con:",
+    "badWith": "Malas con:"
+  },
+  "calendar": {
+    "title": "Calendario de Siembra",
+    "subtitle": "Encuentra los mejores momentos para sembrar según tu ubicación",
+    "selectRegion": "Selecciona tu región",
+    "detectLocation": "Detectar mi ubicación",
+    "or": "o",
+    "selectMonth": "Seleccionar mes",
+    "whatToPlant": "Qué plantar en",
+    "indoors": "Interior",
+    "outdoors": "Exterior",
+    "harvest": "Cosecha",
+    "january": "Enero",
+    "february": "Febrero",
+    "march": "Marzo",
+    "april": "Abril",
+    "may": "Mayo",
+    "june": "Junio",
+    "july": "Julio",
+    "august": "Agosto",
+    "september": "Septiembre",
+    "october": "Octubre",
+    "november": "Noviembre",
+    "december": "Diciembre",
+    "locationDetected": "Ubicación detectada",
+    "hardiness": "Zona de Rusticidad",
+    "customizeCalendar": "Personaliza el calendario para tus necesidades específicas",
+    "hardinessExplanation": "Las zonas de rusticidad son áreas geográficas definidas por las temperaturas mínimas que las plantas pueden soportar para sobrevivir."
+  },
+  "growthTracker": {
+    "title": "Seguimiento de Crecimiento",
+    "subtitle": "Haz seguimiento del progreso de tus plantas a lo largo del tiempo",
+    "myPlants": "Mis Plantas",
+    "addPlant": "Añadir Planta",
+    "plantName": "Nombre de la Planta",
+    "plantType": "Tipo de Planta",
+    "plantingDate": "Fecha de Siembra",
+    "lastWatered": "Último Riego",
+    "nextWatering": "Próximo Riego",
+    "notes": "Notas",
+    "addNote": "Añadir Nota",
+    "uploadPhoto": "Subir Foto",
+    "growthStage": "Etapa de Crecimiento",
+    "seedling": "Plántula",
+    "vegetative": "Vegetativa",
+    "flowering": "Floración",
+    "fruiting": "Fructificación",
+    "harvesting": "Cosecha",
+    "trackGrowth": "Seguir Crecimiento",
+    "addMilestone": "Añadir Hito",
+    "viewHistory": "Ver Historial",
+    "noPlants": "Aún no has añadido plantas. ¡Añade tu primera planta para empezar a hacer seguimiento!",
+    "waterNow": "Regar Ahora",
+    "fertilizeNow": "Fertilizar Ahora",
+    "plantHealth": "Salud de la Planta",
+    "healthy": "Saludable",
+    "needsAttention": "Necesita Atención",
+    "unhealthy": "No Saludable"
+  },
+  "aiInfo": {
+    "title": "Información sobre Vercel AI SDK",
+    "description": "Información sobre costos y uso del SDK de IA de Vercel",
+    "sdkInfo": "El Vercel AI SDK es una herramienta gratuita que simplifica la integración de modelos de IA en aplicaciones web.",
+    "costTitle": "Información de Costos",
+    "sdkCost": "El SDK en sí es gratuito y de código abierto.",
+    "modelCost": "Los modelos de IA como GPT-4 tienen costos asociados con el proveedor (OpenAI).",
+    "usageTitle": "Ejemplos de Uso",
+    "basicExample": "Ejemplo Básico",
+    "advancedExample": "Ejemplo Avanzado",
+    "learnMore": "Más información",
+    "openaiPricing": "Precios de OpenAI",
+    "vercelAiDocs": "Documentación de Vercel AI"
+  }
+}
+

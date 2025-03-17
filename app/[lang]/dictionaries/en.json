@@ -1,0 +1,170 @@
+{
+  "navigation": {
+    "home": "Home",
+    "plantDatabase": "Plant Database",
+    "gardenPlanner": "Garden Planner",
+    "growthTracker": "Growth Tracker",
+    "calendar": "Planting Calendar",
+    "about": "About",
+    "signIn": "Sign In"
+  },
+  "hero": {
+    "title": "Grow Better Together",
+    "subtitle": "Discover the perfect plant companions for your garden with our AI-powered crop association assistant.",
+    "searchPlaceholder": "Search for a crop (e.g., tomato)",
+    "findCompanions": "Find Companions"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Our AI-powered app helps you create the perfect garden by suggesting companion plants that grow well together.",
+    "step1": {
+      "title": "1. Select Your Crops",
+      "description": "Choose the plants you want to grow in your garden."
+    },
+    "step2": {
+      "title": "2. Get AI Recommendations",
+      "description": "Our AI suggests the best companion plants based on scientific data."
+    },
+    "step3": {
+      "title": "3. Plan Your Garden",
+      "description": "Arrange your plants optimally using our interactive garden planner."
+    }
+  },
+  "cropAssistant": {
+    "title": "Crop Assistant",
+    "description": "Ask me about which plants grow well together",
+    "placeholder": "Ask about crop associations...",
+    "welcomeMessage": "Hello! I'm your crop association assistant. What plants are you growing or planning to grow?",
+    "tomatoResponse": "Tomatoes grow well with basil, onions, carrots, and garlic. Avoid planting them near potatoes, fennel, or cabbage.",
+    "lettuceResponse": "Lettuce benefits from being near carrots, radishes, cucumbers, and strawberries. Keep it away from sunflowers.",
+    "carrotResponse": "Carrots grow well with tomatoes, onions, leeks, and rosemary. Avoid planting them near dill.",
+    "defaultResponse": "To give you specific recommendations, I need to know which crop you're interested in. Could you mention a specific plant like tomato, lettuce, or carrot?"
+  },
+  "popularCrops": {
+    "title": "Popular Crops",
+    "description": "Information about common crop associations",
+    "benefits": "Benefits",
+    "goodCompanions": "Good Companions",
+    "badCompanions": "Bad Companions",
+    "tomato": {
+      "name": "Tomato",
+      "benefits": "Basil improves flavor and repels insects. Onions and garlic prevent pests.",
+      "good": ["Basil", "Onion", "Carrot", "Garlic", "Parsley"],
+      "bad": ["Potato", "Fennel", "Cabbage", "Corn"]
+    },
+    "lettuce": {
+      "name": "Lettuce",
+      "benefits": "Grows well with root plants that don't compete for nutrients in the same soil layer.",
+      "good": ["Carrot", "Radish", "Cucumber", "Strawberry", "Onion"],
+      "bad": ["Sunflower", "Broccoli"]
+    },
+    "carrot": {
+      "name": "Carrot",
+      "benefits": "Tomatoes release solanine which protects carrots from pests. Rosemary repels carrot fly.",
+      "good": ["Tomato", "Onion", "Leek", "Rosemary", "Lettuce"],
+      "bad": ["Dill", "Parsley", "Celery"]
+    }
+  },
+  "footer": {
+    "rights": "© 2025 CultivAI. All rights reserved.",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "contact": "Contact"
+  },
+  "gardenPlanner": {
+    "title": "Interactive Garden Planner",
+    "subtitle": "Design your garden layout by dragging and dropping plants",
+    "newGarden": "New Garden",
+    "saveGarden": "Save Garden",
+    "loadGarden": "Load Garden",
+    "gardenName": "Garden Name",
+    "width": "Width (m)",
+    "height": "Height (m)",
+    "createGarden": "Create Garden",
+    "dragPlants": "Drag plants to your garden",
+    "clearGarden": "Clear Garden",
+    "plantList": "Plant List",
+    "gardenTools": "Garden Tools",
+    "addBed": "Add Bed",
+    "addPath": "Add Path",
+    "rotate": "Rotate",
+    "delete": "Delete",
+    "noGarden": "No garden created yet. Create a new garden to start planning!",
+    "companionInfo": "Companion Planting Info",
+    "goodWith": "Good with:",
+    "badWith": "Bad with:"
+  },
+  "calendar": {
+    "title": "Planting Calendar",
+    "subtitle": "Find the best times to plant based on your location",
+    "selectRegion": "Select your region",
+    "detectLocation": "Detect my location",
+    "or": "or",
+    "selectMonth": "Select month",
+    "whatToPlant": "What to plant in",
+    "indoors": "Indoors",
+    "outdoors": "Outdoors",
+    "harvest": "Harvest",
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December",
+    "locationDetected": "Location detected",
+    "hardiness": "Hardiness Zone",
+    "customizeCalendar": "Customize calendar for your specific needs",
+    "hardinessExplanation": "Hardiness zones are geographical areas defined by the minimum temperatures that plants can survive in."
+  },
+  "growthTracker": {
+    "title": "Growth Tracker",
+    "subtitle": "Track the progress of your plants over time",
+    "myPlants": "My Plants",
+    "addPlant": "Add Plant",
+    "plantName": "Plant Name",
+    "plantType": "Plant Type",
+    "plantingDate": "Planting Date",
+    "lastWatered": "Last Watered",
+    "nextWatering": "Next Watering",
+    "notes": "Notes",
+    "addNote": "Add Note",
+    "uploadPhoto": "Upload Photo",
+    "growthStage": "Growth Stage",
+    "seedling": "Seedling",
+    "vegetative": "Vegetative",
+    "flowering": "Flowering",
+    "fruiting": "Fruiting",
+    "harvesting": "Harvesting",
+    "trackGrowth": "Track Growth",
+    "addMilestone": "Add Milestone",
+    "viewHistory": "View History",
+    "noPlants": "No plants added yet. Add your first plant to start tracking!",
+    "waterNow": "Water Now",
+    "fertilizeNow": "Fertilize Now",
+    "plantHealth": "Plant Health",
+    "healthy": "Healthy",
+    "needsAttention": "Needs Attention",
+    "unhealthy": "Unhealthy"
+  },
+  "aiInfo": {
+    "title": "Vercel AI SDK Information",
+    "description": "Information about costs and usage of Vercel AI SDK",
+    "sdkInfo": "The Vercel AI SDK is a free tool that simplifies integrating AI models into web applications.",
+    "costTitle": "Cost Information",
+    "sdkCost": "The SDK itself is free and open source.",
+    "modelCost": "AI models like GPT-4 have costs associated with the provider (OpenAI).",
+    "usageTitle": "Usage Examples",
+    "basicExample": "Basic Example",
+    "advancedExample": "Advanced Example",
+    "learnMore": "Learn more",
+    "openaiPricing": "OpenAI Pricing",
+    "vercelAiDocs": "Vercel AI Documentation"
+  }
+}
+
