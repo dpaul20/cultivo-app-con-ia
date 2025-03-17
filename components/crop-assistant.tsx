@@ -6,9 +6,11 @@ import { Bot, Send, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
+// Actualizar la importación del AssistantAvatar
+import { AssistantAvatar } from "@/components/custom/assistant-avatar"
 
 type Message = {
   role: "user" | "assistant"
@@ -197,12 +199,7 @@ export default function CropAssistant({
           {chatMessages.map((message, index) => (
             <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
               <div className="flex items-start gap-2 max-w-[80%]">
-                {message.role === "assistant" && (
-                  <Avatar className="h-8 w-8 mt-0.5">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="AI" />
-                    <AvatarFallback className="bg-green-100 text-green-700">AI</AvatarFallback>
-                  </Avatar>
-                )}
+                {message.role === "assistant" && <AssistantAvatar />}
                 <div
                   className={`rounded-lg px-3 py-2 text-sm ${
                     message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
@@ -221,10 +218,7 @@ export default function CropAssistant({
           {isLoading && (
             <div className="flex justify-start">
               <div className="flex items-center gap-2 max-w-[80%]">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/placeholder.svg?height=32&width=32" alt="AI" />
-                  <AvatarFallback className="bg-green-100 text-green-700">AI</AvatarFallback>
-                </Avatar>
+                <AssistantAvatar />
                 <div className="rounded-lg px-3 py-2 text-sm bg-muted">
                   <div className="flex gap-1">
                     <div className="h-2 w-2 rounded-full bg-muted-foreground/40 animate-bounce [animation-delay:-0.3s]"></div>

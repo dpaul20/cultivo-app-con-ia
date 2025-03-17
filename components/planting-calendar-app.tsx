@@ -17,6 +17,7 @@ type PlantingActivity = "indoors" | "outdoors" | "harvest"
 type CalendarItem = {
   id: string
   name: string
+  imageUrl?: string
   activities: Record<string, PlantingActivity[]>
 }
 
@@ -32,6 +33,7 @@ const calendarData: CalendarItem[] = [
   {
     id: "tomato",
     name: "Tomato",
+    imageUrl: "https://images.unsplash.com/photo-1592841200221-a6898f307baa?q=80&w=2070&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": ["indoors"],
@@ -50,6 +52,7 @@ const calendarData: CalendarItem[] = [
   {
     id: "lettuce",
     name: "Lettuce",
+    imageUrl: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?q=80&w=2076&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": ["indoors"],
@@ -68,6 +71,7 @@ const calendarData: CalendarItem[] = [
   {
     id: "carrot",
     name: "Carrot",
+    imageUrl: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=2070&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": [],
@@ -86,6 +90,7 @@ const calendarData: CalendarItem[] = [
   {
     id: "pepper",
     name: "Pepper",
+    imageUrl: "https://images.unsplash.com/photo-1563252722-6434563a985d?q=80&w=2070&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": ["indoors"],
@@ -104,6 +109,7 @@ const calendarData: CalendarItem[] = [
   {
     id: "cucumber",
     name: "Cucumber",
+    imageUrl: "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?q=80&w=2070&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": [],
@@ -363,18 +369,28 @@ export default function PlantingCalendarApp({
       <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         {plants.map((plant) => (
           <div key={plant.id} className="flex items-center p-3 border rounded-lg">
-            <div className="mr-3 text-2xl">
-              {plant.id === "tomato"
-                ? "🍅"
-                : plant.id === "lettuce"
-                  ? "🥬"
-                  : plant.id === "carrot"
-                    ? "🥕"
-                    : plant.id === "pepper"
-                      ? "🌶️"
-                      : plant.id === "cucumber"
-                        ? "🥒"
-                        : "🌱"}
+            <div className="mr-3 h-12 w-12 overflow-hidden rounded-full">
+              {plant.imageUrl ? (
+                <img
+                  src={plant.imageUrl || "/placeholder.svg"}
+                  alt={plant.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-muted text-2xl">
+                  {plant.id === "tomato"
+                    ? "🍅"
+                    : plant.id === "lettuce"
+                      ? "🥬"
+                      : plant.id === "carrot"
+                        ? "🥕"
+                        : plant.id === "pepper"
+                          ? "🌶️"
+                          : plant.id === "cucumber"
+                            ? "🥒"
+                            : "🌱"}
+                </div>
+              )}
             </div>
             <div>
               <h3 className="font-medium">{plant.name}</h3>

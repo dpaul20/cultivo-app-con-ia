@@ -31,7 +31,7 @@ export default async function GrowthTrackerPage({
           </div>
         </section>
       </main>
-      <SiteFooter dict={dict} />
+      <SiteFooter dict={dict} lang={params.lang} />
     </div>
   )
 }

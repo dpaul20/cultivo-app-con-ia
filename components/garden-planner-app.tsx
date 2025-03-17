@@ -29,6 +29,7 @@ type Plant = {
   height: number
   goodCompanions: string[]
   badCompanions: string[]
+  imageUrl?: string
 }
 
 type GardenItem = {
@@ -61,6 +62,7 @@ const availablePlants: Plant[] = [
     height: 2,
     goodCompanions: ["basil", "onion", "carrot", "garlic", "parsley"],
     badCompanions: ["potato", "fennel", "cabbage", "corn"],
+    imageUrl: "https://images.unsplash.com/photo-1592841200221-a6898f307baa?q=80&w=2070&auto=format&fit=crop",
   },
   {
     id: "lettuce",
@@ -71,6 +73,7 @@ const availablePlants: Plant[] = [
     height: 1,
     goodCompanions: ["carrot", "radish", "cucumber", "strawberry", "onion"],
     badCompanions: ["sunflower", "broccoli"],
+    imageUrl: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?q=80&w=2076&auto=format&fit=crop",
   },
   {
     id: "carrot",
@@ -81,6 +84,7 @@ const availablePlants: Plant[] = [
     height: 1,
     goodCompanions: ["tomato", "onion", "leek", "rosemary", "lettuce"],
     badCompanions: ["dill", "parsley", "celery"],
+    imageUrl: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=2070&auto=format&fit=crop",
   },
   {
     id: "basil",
@@ -91,6 +95,7 @@ const availablePlants: Plant[] = [
     height: 1,
     goodCompanions: ["tomato", "pepper", "oregano"],
     badCompanions: ["rue"],
+    imageUrl: "https://images.unsplash.com/photo-1600788886242-5c96aabe3757?q=80&w=2070&auto=format&fit=crop",
   },
   {
     id: "onion",
@@ -101,6 +106,7 @@ const availablePlants: Plant[] = [
     height: 1,
     goodCompanions: ["tomato", "carrot", "beet", "strawberry"],
     badCompanions: ["bean", "pea"],
+    imageUrl: "https://images.unsplash.com/photo-1618512496248-a07c50d136cd?q=80&w=1974&auto=format&fit=crop",
   },
 ]
 
@@ -368,7 +374,17 @@ export default function GardenPlannerApp({
                             onDragStart={() => handleDragStart(plant.id)}
                             onClick={() => setSelectedPlant(plant.id)}
                           >
-                            <span className="text-2xl">{plant.icon}</span>
+                            <div className="w-full h-12 mb-1 overflow-hidden rounded">
+                              {plant.imageUrl ? (
+                                <img
+                                  src={plant.imageUrl || "/placeholder.svg"}
+                                  alt={plant.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <span className="text-2xl flex items-center justify-center h-full">{plant.icon}</span>
+                              )}
+                            </div>
                             <span className="text-xs mt-1">{plant.name}</span>
                           </div>
                         </TooltipTrigger>
@@ -428,6 +444,15 @@ export default function GardenPlannerApp({
 
                     return (
                       <div className="space-y-3">
+                        {plantInfo.imageUrl && (
+                          <div className="w-full h-32 overflow-hidden rounded-lg mb-3">
+                            <img
+                              src={plantInfo.imageUrl || "/placeholder.svg"}
+                              alt={plantInfo.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        )}
                         <div>
                           <h4 className="text-sm font-medium mb-1">{dict.goodWith}</h4>
                           <div className="flex flex-wrap gap-1">

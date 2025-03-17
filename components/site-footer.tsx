@@ -1,17 +1,19 @@
 import Link from "next/link"
-import { Sprout } from "lucide-react"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
+import { AppLogo } from "@/components/custom/app-logo"
 
 export default function SiteFooter({
   dict,
+  lang = "en",
 }: {
   dict?: Dictionary
+  lang?: string
 }) {
   return (
     <footer className="border-t py-6 md:py-0">
       <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
         <div className="flex items-center gap-2">
-          <Sprout className="h-5 w-5 text-green-600" />
+          <AppLogo lang={lang || "en"} />
           <p className="text-sm text-muted-foreground">
             {dict?.footer.rights || "© 2025 CultivAI. All rights reserved."}
           </p>

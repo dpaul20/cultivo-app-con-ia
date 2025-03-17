@@ -31,7 +31,7 @@ export default async function GardenPlannerPage({
           </div>
         </section>
       </main>
-      <SiteFooter dict={dict} />
+      <SiteFooter dict={dict} lang={params.lang} />
     </div>
   )
 }

@@ -98,7 +98,7 @@ export default function PopularCrops({
                 <img
                   alt={`${cropData.tomato.name}`}
                   className="aspect-video w-full rounded-lg object-cover"
-                  src="/placeholder.svg?height=200&width=400"
+                  src="https://images.unsplash.com/photo-1592841200221-a6898f307baa?q=80&w=2070&auto=format&fit=crop"
                 />
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function PopularCrops({
                 <img
                   alt={`${cropData.lettuce.name}`}
                   className="aspect-video w-full rounded-lg object-cover"
-                  src="/placeholder.svg?height=200&width=400"
+                  src="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?q=80&w=2076&auto=format&fit=crop"
                 />
               </div>
             </div>
@@ -196,7 +196,7 @@ export default function PopularCrops({
                 <img
                   alt={`${cropData.carrot.name}`}
                   className="aspect-video w-full rounded-lg object-cover"
-                  src="/placeholder.svg?height=200&width=400"
+                  src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=2070&auto=format&fit=crop"
                 />
               </div>
             </div>

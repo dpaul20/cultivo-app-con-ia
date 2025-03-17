@@ -106,8 +106,16 @@ export default function GrowthTrackerApp({
         { id: "n2", date: new Date(2025, 3, 1), text: "First true leaves appeared" },
       ],
       photos: [
-        { id: "p1", date: new Date(2025, 2, 20), url: "/placeholder.svg?height=200&width=200" },
-        { id: "p2", date: new Date(2025, 3, 5), url: "/placeholder.svg?height=200&width=200" },
+        {
+          id: "p1",
+          date: new Date(2025, 2, 20),
+          url: "https://images.unsplash.com/photo-1592150621744-aca64f48394a?q=80&w=2091&auto=format&fit=crop",
+        },
+        {
+          id: "p2",
+          date: new Date(2025, 3, 5),
+          url: "https://images.unsplash.com/photo-1588105538421-11c9b8edb523?q=80&w=2069&auto=format&fit=crop",
+        },
       ],
     },
     {
@@ -120,7 +128,13 @@ export default function GrowthTrackerApp({
       growthStage: "seedling",
       health: "needsAttention",
       notes: [{ id: "n3", date: new Date(2025, 3, 1), text: "Direct sowed seeds in garden bed" }],
-      photos: [{ id: "p3", date: new Date(2025, 3, 10), url: "/placeholder.svg?height=200&width=200" }],
+      photos: [
+        {
+          id: "p3",
+          date: new Date(2025, 3, 10),
+          url: "https://images.unsplash.com/photo-1582012107971-5aee0b4d4b5e?q=80&w=2070&auto=format&fit=crop",
+        },
+      ],
     },
   ])
 
@@ -265,7 +279,12 @@ export default function GrowthTrackerApp({
             className={`cursor-pointer hover:shadow-md transition-shadow ${selectedPlant === plant.id ? "ring-2 ring-primary" : ""}`}
             onClick={() => setSelectedPlant(plant.id)}
           >
-            <CardHeader className="pb-2">
+            <div className="absolute inset-0 rounded-lg overflow-hidden opacity-10">
+              {plant.photos.length > 0 && (
+                <img src={plant.photos[0].url || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
+              )}
+            </div>
+            <CardHeader className="pb-2 relative z-10">
               <div className="flex justify-between items-start">
                 <div>
                   <CardTitle>{plant.name}</CardTitle>
@@ -284,7 +303,7 @@ export default function GrowthTrackerApp({
                 </Badge>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="relative z-10">
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">{dict.plantingDate}:</span>
@@ -316,7 +335,7 @@ export default function GrowthTrackerApp({
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="pt-0">
+            <CardFooter className="pt-0 relative z-10">
               <Button variant="outline" size="sm" className="w-full" onClick={() => waterPlant(plant.id)}>
                 <Droplets className="mr-2 h-4 w-4" />
                 {dict.waterNow}

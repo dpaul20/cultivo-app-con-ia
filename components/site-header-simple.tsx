@@ -2,10 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Sprout, Menu, X } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LanguageSwitcher from "@/components/language-switcher"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
+// Actualizar la importación del AppLogo
+import { AppLogo } from "@/components/custom/app-logo"
 
 export default function SiteHeader({
   lang,
@@ -21,8 +23,7 @@ export default function SiteHeader({
       <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
-            <Sprout className="h-6 w-6 text-green-600" />
-            <span className="text-lg font-bold">CultivAI</span>
+            <AppLogo lang={lang} />
           </div>
 
           {/* Menú de escritorio */}
@@ -66,10 +67,7 @@ export default function SiteHeader({
         <div className="fixed inset-0 z-50 bg-background md:hidden">
           <div className="container flex flex-col h-full">
             <div className="flex items-center justify-between py-4">
-              <div className="flex items-center gap-2">
-                <Sprout className="h-6 w-6 text-green-600" />
-                <span className="text-lg font-bold">CultivAI</span>
-              </div>
+              <AppLogo lang={lang} />
               <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
                 <X className="h-6 w-6" />
               </Button>

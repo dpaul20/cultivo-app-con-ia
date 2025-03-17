@@ -59,7 +59,7 @@ export default async function Home({
               <img
                 alt="Garden with companion planting"
                 className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
-                src="/placeholder.svg?height=400&width=800"
+                src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=2070&auto=format&fit=crop"
               />
             </div>
           </div>
@@ -90,7 +90,7 @@ export default async function Home({
                   <img
                     alt="Select crops illustration"
                     className="aspect-video w-full rounded-lg object-cover"
-                    src="/placeholder.svg?height=200&width=400"
+                    src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?q=80&w=2071&auto=format&fit=crop"
                   />
                 </CardContent>
               </Card>
@@ -106,7 +106,7 @@ export default async function Home({
                   <img
                     alt="AI recommendations illustration"
                     className="aspect-video w-full rounded-lg object-cover"
-                    src="/placeholder.svg?height=200&width=400"
+                    src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=2070&auto=format&fit=crop"
                   />
                 </CardContent>
               </Card>
@@ -122,7 +122,7 @@ export default async function Home({
                   <img
                     alt="Garden planner illustration"
                     className="aspect-video w-full rounded-lg object-cover"
-                    src="/placeholder.svg?height=200&width=400"
+                    src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=2070&auto=format&fit=crop"
                   />
                 </CardContent>
               </Card>
@@ -139,7 +139,7 @@ export default async function Home({
           </div>
         </section>
       </main>
-      <SiteFooter dict={dict} />
+      <SiteFooter dict={dict} lang={params.lang} />
     </div>
   )
 }
