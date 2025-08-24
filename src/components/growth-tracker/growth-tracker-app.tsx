@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { addDays } from "date-fns"
+import { addDays, format } from "date-fns"
 import { Camera, Plus, Droplets, Sprout, FileText, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -20,8 +20,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Textarea } from "@/components/ui/textarea"
-import type { Dictionary } from "@/app/[lang]/dictionaries"
-import { formatDate } from "@/utils/format-utils"
+import { useTranslations, useLocale } from "next-intl"
+import Image from "next/image"
+import { es, enUS } from "date-fns/locale"
 
 // Definir tipos para las plantas
 type GrowthStage = "seedling" | "vegetative" | "flowering" | "fruiting" | "harvesting"
@@ -52,43 +53,10 @@ type Plant = {
   photos: PlantPhoto[]
 }
 
-export default function GrowthTrackerApp({
-  lang,
-  dictionary,
-}: {
-  lang: string
-  dictionary?: Dictionary
-}) {
-  const dict = dictionary?.growthTracker || {
-    title: "Growth Tracker",
-    subtitle: "Track the progress of your plants over time",
-    myPlants: "My Plants",
-    addPlant: "Add Plant",
-    plantName: "Plant Name",
-    plantType: "Plant Type",
-    plantingDate: "Planting Date",
-    lastWatered: "Last Watered",
-    nextWatering: "Next Watering",
-    notes: "Notes",
-    addNote: "Add Note",
-    uploadPhoto: "Upload Photo",
-    growthStage: "Growth Stage",
-    seedling: "Seedling",
-    vegetative: "Vegetative",
-    flowering: "Flowering",
-    fruiting: "Fruiting",
-    harvesting: "Harvesting",
-    trackGrowth: "Track Growth",
-    addMilestone: "Add Milestone",
-    viewHistory: "View History",
-    noPlants: "No plants added yet. Add your first plant to start tracking!",
-    waterNow: "Water Now",
-    fertilizeNow: "Fertilize Now",
-    plantHealth: "Plant Health",
-    healthy: "Healthy",
-    needsAttention: "Needs Attention",
-    unhealthy: "Unhealthy",
-  }
+export default function GrowthTrackerApp() {
+  const t = useTranslations('growthTracker')
+  const lang = useLocale()
+  const localeObj = lang === 'es' ? es : enUS
 
   // Estados
   const [plants, setPlants] = useState<Plant[]>([
@@ -265,8 +233,8 @@ export default function GrowthTrackerApp({
     if (plants.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center h-[300px] border rounded-lg bg-muted/20">
-          <p className="text-muted-foreground mb-4">{dict.noPlants}</p>
-          <Button onClick={() => setIsAddingPlant(true)}>{dict.addPlant}</Button>
+          <p className="text-muted-foreground mb-4">{t('noPlants')}</p>
+          <Button onClick={() => setIsAddingPlant(true)}>{t('addPlant')}</Button>
         </div>
       )
     }
@@ -281,7 +249,15 @@ export default function GrowthTrackerApp({
           >
             <div className="absolute inset-0 rounded-lg overflow-hidden opacity-10">
               {plant.photos.length > 0 && (
-                <img src={plant.photos[0].url || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
+                <Image
+                  src={plant.photos[0].url || "/placeholder.svg"}
+                  alt={plant.name}
+                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  style={{ objectFit: "cover" }}
+                  priority={false}
+                />
               )}
             </div>
             <CardHeader className="pb-2 relative z-10">
@@ -290,37 +266,34 @@ export default function GrowthTrackerApp({
                   <CardTitle>{plant.name}</CardTitle>
                   <CardDescription>{plant.type}</CardDescription>
                 </div>
-                <Badge
-                  variant={
-                    plant.health === "healthy"
-                      ? "default"
-                      : plant.health === "needsAttention"
-                        ? "outline"
-                        : "destructive"
-                  }
-                >
-                  {dict[plant.health]}
-                </Badge>
+                {(() => {
+                  let badgeVariant: "default" | "outline" | "destructive" = "default";
+                  if (plant.health === "needsAttention") badgeVariant = "outline";
+                  else if (plant.health === "unhealthy") badgeVariant = "destructive";
+                  return (
+                    <Badge variant={badgeVariant}>{t(plant.health)}</Badge>
+                  );
+                })()}
               </div>
             </CardHeader>
             <CardContent className="relative z-10">
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{dict.plantingDate}:</span>
-                  <span>{formatDate(plant.plantingDate, "PP", lang)}</span>
+                  <span className="text-muted-foreground">{t('plantingDate')}:</span>
+                  <span>{format(plant.plantingDate, "PP", { locale: localeObj })}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{dict.lastWatered}:</span>
-                  <span>{formatDate(plant.lastWatered, "PP", lang)}</span>
+                  <span className="text-muted-foreground">{t('lastWatered')}:</span>
+                  <span>{format(plant.lastWatered, "PP", { locale: localeObj })}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{dict.growthStage}:</span>
-                  <span>{dict[plant.growthStage]}</span>
+                  <span className="text-muted-foreground">{t('growthStage')}:</span>
+                  <span>{t(plant.growthStage)}</span>
                 </div>
                 <div className="pt-2">
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-muted-foreground">{dict.nextWatering}:</span>
-                    <span>{formatDate(plant.nextWatering, "PP", lang)}</span>
+                    <span className="text-muted-foreground">{t('nextWatering')}:</span>
+                    <span>{format(plant.nextWatering, "PP", { locale: localeObj })}</span>
                   </div>
                   <Progress
                     value={Math.max(
@@ -338,7 +311,7 @@ export default function GrowthTrackerApp({
             <CardFooter className="pt-0 relative z-10">
               <Button variant="outline" size="sm" className="w-full" onClick={() => waterPlant(plant.id)}>
                 <Droplets className="mr-2 h-4 w-4" />
-                {dict.waterNow}
+                {t('waterNow')}
               </Button>
             </CardFooter>
           </Card>
@@ -349,7 +322,7 @@ export default function GrowthTrackerApp({
           onClick={() => setIsAddingPlant(true)}
         >
           <Plus className="h-8 w-8 mb-2 text-muted-foreground" />
-          <p className="text-muted-foreground">{dict.addPlant}</p>
+          <p className="text-muted-foreground">{t('addPlant')}</p>
         </Card>
       </div>
     )
@@ -375,14 +348,14 @@ export default function GrowthTrackerApp({
           <Tabs defaultValue="info">
             <TabsList className="grid grid-cols-3 mb-4">
               <TabsTrigger value="info">Info</TabsTrigger>
-              <TabsTrigger value="notes">{dict.notes}</TabsTrigger>
-              <TabsTrigger value="photos">Photos</TabsTrigger>
+              <TabsTrigger value="notes">{t('notes')}</TabsTrigger>
+              <TabsTrigger value="photos">{t('photos', { defaultValue: 'Photos' })}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="info" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <Label>{dict.growthStage}</Label>
+                  <Label>{t('growthStage')}</Label>
                   <Select
                     value={plant.growthStage}
                     onValueChange={(value) => updateGrowthStage(plant.id, value as GrowthStage)}
@@ -391,25 +364,25 @@ export default function GrowthTrackerApp({
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="seedling">{dict.seedling}</SelectItem>
-                      <SelectItem value="vegetative">{dict.vegetative}</SelectItem>
-                      <SelectItem value="flowering">{dict.flowering}</SelectItem>
-                      <SelectItem value="fruiting">{dict.fruiting}</SelectItem>
-                      <SelectItem value="harvesting">{dict.harvesting}</SelectItem>
+                      <SelectItem value="seedling">{t('seedling')}</SelectItem>
+                      <SelectItem value="vegetative">{t('vegetative')}</SelectItem>
+                      <SelectItem value="flowering">{t('flowering')}</SelectItem>
+                      <SelectItem value="fruiting">{t('fruiting')}</SelectItem>
+                      <SelectItem value="harvesting">{t('harvesting')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div>
-                  <Label>{dict.plantHealth}</Label>
+                  <Label>{t('plantHealth')}</Label>
                   <Select value={plant.health} onValueChange={(value) => updateHealth(plant.id, value as PlantHealth)}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="healthy">{dict.healthy}</SelectItem>
-                      <SelectItem value="needsAttention">{dict.needsAttention}</SelectItem>
-                      <SelectItem value="unhealthy">{dict.unhealthy}</SelectItem>
+                      <SelectItem value="healthy">{t('healthy')}</SelectItem>
+                      <SelectItem value="needsAttention">{t('needsAttention')}</SelectItem>
+                      <SelectItem value="unhealthy">{t('unhealthy')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -418,11 +391,11 @@ export default function GrowthTrackerApp({
               <div className="flex gap-2">
                 <Button className="flex-1" onClick={() => waterPlant(plant.id)}>
                   <Droplets className="mr-2 h-4 w-4" />
-                  {dict.waterNow}
+                  {t('waterNow')}
                 </Button>
                 <Button variant="outline" className="flex-1">
                   <Sprout className="mr-2 h-4 w-4" />
-                  {dict.fertilizeNow}
+                  {t('fertilizeNow')}
                 </Button>
               </div>
             </TabsContent>
@@ -430,13 +403,13 @@ export default function GrowthTrackerApp({
             <TabsContent value="notes">
               <div className="space-y-4">
                 {plant.notes.length === 0 ? (
-                  <p className="text-muted-foreground text-center py-4">{`No notes yet. Add your first note about ${plant.name}.`}</p>
+                  <p className="text-muted-foreground text-center py-4">{t('noNotes', { name: plant.name, defaultValue: `No notes yet. Add your first note about ${plant.name}.` })}</p>
                 ) : (
                   <div className="space-y-3">
                     {plant.notes.map((note) => (
                       <div key={note.id} className="border rounded-lg p-3">
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-xs text-muted-foreground">{formatDate(note.date, "PPp", lang)}</span>
+                          <span className="text-xs text-muted-foreground">{format(note.date, "PPp", { locale: localeObj })}</span>
                         </div>
                         <p className="text-sm">{note.text}</p>
                       </div>
@@ -446,7 +419,7 @@ export default function GrowthTrackerApp({
 
                 <Button variant="outline" className="w-full" onClick={() => setIsAddingNote(true)}>
                   <FileText className="mr-2 h-4 w-4" />
-                  {dict.addNote}
+                  {t('addNote')}
                 </Button>
               </div>
             </TabsContent>
@@ -454,18 +427,21 @@ export default function GrowthTrackerApp({
             <TabsContent value="photos">
               <div className="space-y-4">
                 {plant.photos.length === 0 ? (
-                  <p className="text-muted-foreground text-center py-4">{`No photos yet. Add your first photo of ${plant.name}.`}</p>
+                  <p className="text-muted-foreground text-center py-4">{t('noPhotos', { name: plant.name, defaultValue: `No photos yet. Add your first photo of ${plant.name}.` })}</p>
                 ) : (
                   <div className="grid grid-cols-2 gap-3">
                     {plant.photos.map((photo) => (
                       <div key={photo.id} className="border rounded-lg overflow-hidden">
-                        <img
+                        <Image
                           src={photo.url || "/placeholder.svg"}
-                          alt={`Photo of ${plant.name}`}
+                          alt={plant.name}
                           className="w-full aspect-square object-cover"
+                          width={400}
+                          height={400}
+                          style={{ objectFit: "cover" }}
                         />
                         <div className="p-2">
-                          <span className="text-xs text-muted-foreground">{formatDate(photo.date, "PP", lang)}</span>
+                          <span className="text-xs text-muted-foreground">{format(photo.date, "PP", { locale: localeObj })}</span>
                         </div>
                       </div>
                     ))}
@@ -474,7 +450,7 @@ export default function GrowthTrackerApp({
 
                 <Button variant="outline" className="w-full">
                   <Camera className="mr-2 h-4 w-4" />
-                  {dict.uploadPhoto}
+                  {t('uploadPhoto')}
                 </Button>
               </div>
             </TabsContent>
@@ -492,25 +468,25 @@ export default function GrowthTrackerApp({
       <Dialog open={isAddingPlant} onOpenChange={setIsAddingPlant}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{dict.addPlant}</DialogTitle>
-            <DialogDescription>{dict.subtitle}</DialogDescription>
+            <DialogTitle>{t('addPlant')}</DialogTitle>
+            <DialogDescription>{t('subtitle')}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="name">{dict.plantName}</Label>
+              <Label htmlFor="name">{t('plantName')}</Label>
               <Input id="name" value={newPlantName} onChange={(e) => setNewPlantName(e.target.value)} />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="type">{dict.plantType}</Label>
+              <Label htmlFor="type">{t('plantType')}</Label>
               <Input id="type" value={newPlantType} onChange={(e) => setNewPlantType(e.target.value)} />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="date">{dict.plantingDate}</Label>
+              <Label htmlFor="date">{t('plantingDate')}</Label>
               <Input id="date" type="date" value={newPlantDate} onChange={(e) => setNewPlantDate(e.target.value)} />
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={addPlant}>{dict.addPlant}</Button>
+            <Button onClick={addPlant}>{t('addPlant')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -518,7 +494,7 @@ export default function GrowthTrackerApp({
       <Dialog open={isAddingNote} onOpenChange={setIsAddingNote}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{dict.addNote}</DialogTitle>
+            <DialogTitle>{t('addNote')}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <Textarea
@@ -529,7 +505,7 @@ export default function GrowthTrackerApp({
             />
           </div>
           <DialogFooter>
-            <Button onClick={addNote}>{dict.addNote}</Button>
+            <Button onClick={addNote}>{t('addNote')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
