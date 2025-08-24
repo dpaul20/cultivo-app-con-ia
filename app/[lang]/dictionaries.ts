@@ -10,6 +10,7 @@ export type Dictionary = {
     signIn: string
     growthTracker: string
     calendar: string
+    harvestCalendar: string
   }
   hero: {
     title: string
@@ -169,6 +170,10 @@ export type Dictionary = {
     openaiPricing: string
     vercelAiDocs: string
   }
+  harvestCalendar: {
+    title: string
+    subtitle: string
+  }
 }
 
 // Diccionarios para cada idioma con datos predeterminados
@@ -203,6 +208,7 @@ function getDefaultDictionary(locale: string): Dictionary {
         signIn: "Iniciar Sesión",
         growthTracker: "Seguimiento",
         calendar: "Calendario",
+        harvestCalendar: "Calendario de Cosecha",
       },
       hero: {
         title: "Cultiva Mejor en Compañía",
@@ -370,9 +376,13 @@ function getDefaultDictionary(locale: string): Dictionary {
         openaiPricing: "Precios de OpenAI",
         vercelAiDocs: "Documentación de Vercel AI",
       },
+      harvestCalendar: {
+        title: "Calendario de Cosecha",
+        subtitle: "Calcula tu calendario de cosecha según tu ubicación y siembra."
+      },
     }
   } else {
-    return {
+  return {
       navigation: {
         home: "Home",
         plantDatabase: "Plant Database",
@@ -381,6 +391,7 @@ function getDefaultDictionary(locale: string): Dictionary {
         signIn: "Sign In",
         growthTracker: "Growth Tracker",
         calendar: "Calendar",
+        harvestCalendar: "Harvest Calendar",
       },
       hero: {
         title: "Grow Better Together",
@@ -544,6 +555,10 @@ function getDefaultDictionary(locale: string): Dictionary {
         learnMore: "Learn More",
         openaiPricing: "OpenAI Pricing",
         vercelAiDocs: "Vercel AI Docs",
+      },
+      harvestCalendar: {
+        title: "Harvest Calendar",
+        subtitle: "Calculate your harvest calendar based on your location and planting."
       },
     }
   }

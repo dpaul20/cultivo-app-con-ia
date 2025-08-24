@@ -6,7 +6,12 @@
     "growthTracker": "Seguimiento",
     "calendar": "Calendario de Siembra",
     "about": "Acerca de",
-    "signIn": "Iniciar Sesión"
+    "signIn": "Iniciar Sesión",
+    "harvestCalendar": "Calendario de Cosecha"
+  },
+  "harvestCalendar": {
+    "title": "Calendario de Cosecha",
+    "subtitle": "Calcula tu calendario de cosecha según tu ubicación y siembra."
   },
   "hero": {
     "title": "Cultiva Mejor en Compañía",
@@ -167,4 +172,3 @@
     "vercelAiDocs": "Documentación de Vercel AI"
   }
 }
-

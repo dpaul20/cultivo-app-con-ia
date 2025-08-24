@@ -58,6 +58,13 @@ export default function MobileMenu({
               >
                 {dict?.navigation.calendar || "Planting Calendar"}
               </Link>
+              <Link
+                href={`/${lang}/harvest-calendar`}
+                className="text-xl font-medium"
+                onClick={() => setIsOpen(false)}
+              >
+                {dict?.navigation.harvestCalendar || "Calendario de Cosecha"}
+              </Link>
             </nav>
 
             <div className="mt-auto pb-8">

@@ -34,6 +34,9 @@ export default function SiteHeader({
           <Link href={`/${lang}/planting-calendar`} className="text-sm font-medium">
             {dict?.navigation.calendar || "Planting Calendar"}
           </Link>
+          <Link href={`/${lang}/harvest-calendar`} className="text-sm font-medium">
+            {dict?.navigation.harvestCalendar || "Calendario de Cosecha"}
+          </Link>
         </nav>
 
         <div className="flex items-center gap-4">

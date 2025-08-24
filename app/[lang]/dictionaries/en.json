@@ -6,7 +6,12 @@
     "growthTracker": "Growth Tracker",
     "calendar": "Planting Calendar",
     "about": "About",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "harvestCalendar": "Harvest Calendar"
+  },
+  "harvestCalendar": {
+    "title": "Harvest Calendar",
+    "subtitle": "Calculate your harvest calendar based on your location and planting."
   },
   "hero": {
     "title": "Grow Better Together",
@@ -167,4 +172,3 @@
     "vercelAiDocs": "Vercel AI Documentation"
   }
 }
-
