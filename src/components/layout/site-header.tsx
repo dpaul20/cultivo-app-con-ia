@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Sprout } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import LanguageSwitcher from "@/components/language-switcher"
+import LanguageSwitcher from "@/components/LocaleSwitcher"
 import MobileMenu from "./mobile-menu"
 import type { Dictionary } from "@/app/[lang]/dictionaries"
 

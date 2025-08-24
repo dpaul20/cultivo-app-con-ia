@@ -1,7 +1,6 @@
-import { redirect } from "next/navigation"
+import { redirect } from "next/navigation";
 
-// Esta página redirige a la versión en español por defecto
-export default function Home() {
-  redirect("/es")
+// This page only renders when the app is built statically (output: 'export')
+export default function RootPage() {
+  redirect("/es");
 }
-

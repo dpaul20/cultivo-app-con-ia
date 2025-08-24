@@ -5,8 +5,17 @@ export const routing = defineRouting({
   defaultLocale: "en",
   pathnames: {
     "/": "/",
-    "/pathnames": {
-      es: "/nombres-de-ruta",
+    "/garden-planner": {
+      es: "/planificador"
     },
+    "/growth-tracker": {
+      es: "/seguimiento"
+    },
+    "/planting-calendar": {
+      es: "/calendario-de-siembra"
+    },
+    "/harvest-calendar": {
+      es: "/calendario-de-cosecha"
+    }
   },
 });

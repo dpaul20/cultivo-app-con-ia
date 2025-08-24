@@ -2,9 +2,11 @@ import { Check, X } from "lucide-react"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import type { Dictionary } from "@/app/[lang]/dictionaries"
 
-// Default data to use as fallback if dictionary is undefined
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+
+// Mock data
 const defaultData = {
   title: "Popular Crops",
   description: "Information about common crop associations",
@@ -31,21 +33,17 @@ const defaultData = {
   },
 }
 
-export default function PopularCrops({
-  lang,
-  dictionary,
-}: {
-  lang: string
-  dictionary?: Dictionary
-}) {
-  // Use dictionary.popularCrops if available, otherwise use defaultData
-  const cropData = dictionary?.popularCrops || defaultData
+
+export default function PopularCrops() {
+  const t = useTranslations("popularCrops");
+  // En el futuro, cropData vendrá de una API
+  const cropData = defaultData;
 
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle>{cropData.title}</CardTitle>
-        <CardDescription>{cropData.description}</CardDescription>
+        <CardTitle>{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="tomato">
@@ -61,7 +59,6 @@ export default function PopularCrops({
                 <h3 className="font-medium mb-2">{cropData.benefits}</h3>
                 <p className="text-sm text-muted-foreground">{cropData.tomato.benefits}</p>
               </div>
-
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <h3 className="font-medium mb-2 flex items-center gap-1">
@@ -77,7 +74,6 @@ export default function PopularCrops({
                     ))}
                   </ul>
                 </div>
-
                 <div>
                   <h3 className="font-medium mb-2 flex items-center gap-1">
                     <X className="h-4 w-4 text-red-600" />
@@ -93,12 +89,13 @@ export default function PopularCrops({
                   </ul>
                 </div>
               </div>
-
               <div className="mt-4">
-                <img
-                  alt={`${cropData.tomato.name}`}
+                <Image
+                  alt={cropData.tomato.name}
                   className="aspect-video w-full rounded-lg object-cover"
                   src="https://images.unsplash.com/photo-1592841200221-a6898f307baa?q=80&w=2070&auto=format&fit=crop"
+                  width={800}
+                  height={450}
                 />
               </div>
             </div>
@@ -110,7 +107,6 @@ export default function PopularCrops({
                 <h3 className="font-medium mb-2">{cropData.benefits}</h3>
                 <p className="text-sm text-muted-foreground">{cropData.lettuce.benefits}</p>
               </div>
-
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <h3 className="font-medium mb-2 flex items-center gap-1">
@@ -126,7 +122,6 @@ export default function PopularCrops({
                     ))}
                   </ul>
                 </div>
-
                 <div>
                   <h3 className="font-medium mb-2 flex items-center gap-1">
                     <X className="h-4 w-4 text-red-600" />
@@ -142,12 +137,13 @@ export default function PopularCrops({
                   </ul>
                 </div>
               </div>
-
               <div className="mt-4">
-                <img
-                  alt={`${cropData.lettuce.name}`}
+                <Image
+                  alt={cropData.lettuce.name}
                   className="aspect-video w-full rounded-lg object-cover"
                   src="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?q=80&w=2076&auto=format&fit=crop"
+                  width={800}
+                  height={450}
                 />
               </div>
             </div>
@@ -159,7 +155,6 @@ export default function PopularCrops({
                 <h3 className="font-medium mb-2">{cropData.benefits}</h3>
                 <p className="text-sm text-muted-foreground">{cropData.carrot.benefits}</p>
               </div>
-
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <h3 className="font-medium mb-2 flex items-center gap-1">
@@ -175,7 +170,6 @@ export default function PopularCrops({
                     ))}
                   </ul>
                 </div>
-
                 <div>
                   <h3 className="font-medium mb-2 flex items-center gap-1">
                     <X className="h-4 w-4 text-red-600" />
@@ -191,12 +185,13 @@ export default function PopularCrops({
                   </ul>
                 </div>
               </div>
-
               <div className="mt-4">
-                <img
-                  alt={`${cropData.carrot.name}`}
+                <Image
+                  alt={cropData.carrot.name}
                   className="aspect-video w-full rounded-lg object-cover"
                   src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=2070&auto=format&fit=crop"
+                  width={800}
+                  height={450}
                 />
               </div>
             </div>

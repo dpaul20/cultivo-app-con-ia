@@ -1,4 +1,69 @@
 {
+  "popularCrops": {
+    "title": "Cultivos Populares",
+    "description": "Información sobre asociaciones comunes de cultivos"
+  },
+  "LocaleSwitcher": {
+    "label": "Cambiar idioma",
+    "locale": "{locale, select, es {🇪🇸 Español} en {🇺🇸 English} other {Unknown}}"
+  },
+  "Navigation": {
+    "home": "Inicio",
+    "gardenPlanner": "Planificador",
+    "growthTracker": "Seguimiento",
+    "calendar": "Calendario de Siembra",
+    "harvestCalendar": "Calendario de Cosecha",
+    "signIn": "Iniciar Sesión",
+    "menu": "Menú"
+  },
+  "HomePage": {
+    "hero": {
+      "title": "Cultiva Mejor en Compañía",
+      "subtitle": "Descubre las plantas compañeras perfectas para tu huerto con nuestro asistente de asociación de cultivos con IA.",
+      "searchPlaceholder": "Busca un cultivo (ej., tomate)",
+      "findCompanions": "Buscar Compañeros"
+    },
+    "howItWorks": {
+      "title": "Cómo Funciona",
+      "subtitle": "Nuestra app con IA te ayuda a crear el huerto perfecto sugiriendo plantas compañeras que crecen bien juntas.",
+      "step1": {
+        "title": "1. Selecciona tus Cultivos",
+        "description": "Elige las plantas que quieres cultivar en tu huerto."
+      },
+      "step2": {
+        "title": "2. Obtén Recomendaciones de IA",
+        "description": "Nuestra IA sugiere las mejores plantas compañeras basadas en datos científicos."
+      },
+      "step3": {
+        "title": "3. Planifica tu Huerto",
+        "description": "Organiza tus plantas de manera óptima usando nuestro planificador interactivo."
+      }
+    }
+  },
+  "LocaleLayout": {
+    "title": "next-intl example"
+  },
+  "Error": {
+    "description": "<p>We've unfortunately encountered an error.</p><p>You can try to <retry>reload the page</retry> you were visiting.</p>",
+    "title": "Something went wrong!"
+  },
+  "PageLayout": {
+    "links": {
+      "docs": {
+        "description": "Learn more about next-intl in the official docs.",
+        "href": "https://next-intl.dev",
+        "title": "Docs"
+      },
+      "source": {
+        "description": "Browse the source code of this example on GitHub.",
+        "href": "https://github.com/amannn/next-intl/tree/main/examples/example-app-router",
+        "title": "Source code"
+      }
+    }
+  },
+  "Manifest": {
+    "name": "next-intl example"
+  },
   "navigation": {
     "home": "Inicio",
     "plantDatabase": "Base de Plantas",
@@ -37,6 +102,18 @@
   },
   "cropAssistant": {
     "title": "Asistente de Cultivos",
-    "description": "Pregúntame sobre qué plantas crecen bien juntas"
+    "description": "Pregúntame sobre qué plantas crecen bien juntas",
+    "placeholder": "Pregunta sobre asociaciones de cultivos...",
+    "welcomeMessage": "¡Hola! Soy tu asistente de asociación de cultivos. ¿Qué plantas estás cultivando o planeas cultivar?",
+    "tomatoResponse": "Los tomates crecen bien junto a albahaca, cebolla, zanahoria y ajo. Evita plantarlos cerca de papas, hinojo o repollo.",
+    "lettuceResponse": "La lechuga se beneficia de estar cerca de zanahorias, rábanos, pepinos y fresas. Manténla alejada de los girasoles.",
+    "carrotResponse": "Las zanahorias crecen bien con tomates, cebollas, puerros y romero. Evita plantarlas cerca de eneldo.",
+    "defaultResponse": "Para darte recomendaciones específicas, necesito saber qué cultivo te interesa. ¿Puedes mencionar una planta específica como tomate, lechuga o zanahoria?"
+  },
+  "footer": {
+    "rights": "© 2025 CultivAI. Todos los derechos reservados.",
+    "terms": "Términos",
+    "privacy": "Privacidad",
+    "contact": "Contacto"
   }
 }

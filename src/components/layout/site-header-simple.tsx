@@ -1,54 +1,61 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import LanguageSwitcher from "@/components/language-switcher"
-import type { Dictionary } from "@/app/[lang]/dictionaries"
+import { useState } from "react";
+import NavigationLink from "@/components/NavigationLink";
+import { useTranslations } from "next-intl";
+
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 // Actualizar la importación del AppLogo
-import { AppLogo } from "@/components/custom/app-logo"
+import { AppLogo } from "@/components/custom/app-logo";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
-export default function SiteHeader({
-  lang,
-  dict,
-}: {
-  lang: string
-  dict?: Dictionary
-}) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
+export default function SiteHeader() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const t = useTranslations("Navigation");
   return (
     <>
       <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
-            <AppLogo lang={lang} />
+            <AppLogo />
           </div>
 
           {/* Menú de escritorio */}
           <nav className="hidden md:flex gap-6">
-            <Link href={`/${lang}`} className="text-sm font-medium">
-              {dict?.navigation.home || "Home"}
-            </Link>
-            <Link href={`/${lang}/garden-planner`} className="text-sm font-medium">
-              {dict?.navigation.gardenPlanner || "Garden Planner"}
-            </Link>
-            <Link href={`/${lang}/growth-tracker`} className="text-sm font-medium">
-              {dict?.navigation.growthTracker || "Growth Tracker"}
-            </Link>
-            <Link href={`/${lang}/planting-calendar`} className="text-sm font-medium">
-              {dict?.navigation.calendar || "Planting Calendar"}
-            </Link>
-            <Link href={`/${lang}/harvest-calendar`} className="text-sm font-medium">
-              {dict?.navigation.harvestCalendar || "Calendario de Cosecha"}
-            </Link>
+            <NavigationLink href="/" className="text-sm font-medium">
+              {t("home")}
+            </NavigationLink>
+            <NavigationLink
+              href="/garden-planner"
+              className="text-sm font-medium"
+            >
+              {t("gardenPlanner")}
+            </NavigationLink>
+            <NavigationLink
+              href="/growth-tracker"
+              className="text-sm font-medium"
+            >
+              {t("growthTracker")}
+            </NavigationLink>
+            <NavigationLink
+              href="/planting-calendar"
+              className="text-sm font-medium"
+            >
+              {t("calendar")}
+            </NavigationLink>
+            <NavigationLink
+              href="/harvest-calendar"
+              className="text-sm font-medium"
+            >
+              {t("harvestCalendar")}
+            </NavigationLink>
           </nav>
 
           <div className="flex items-center gap-4">
-            <LanguageSwitcher lang={lang} />
+            <LocaleSwitcher />
             <Button variant="outline" size="sm" className="hidden md:flex">
-              {dict?.navigation.signIn || "Sign In"}
+              {t("signIn")}
             </Button>
 
             {/* Botón de menú móvil */}
@@ -70,55 +77,66 @@ export default function SiteHeader({
         <div className="fixed inset-0 z-50 bg-background md:hidden">
           <div className="container flex flex-col h-full">
             <div className="flex items-center justify-between py-4">
-              <AppLogo lang={lang} />
-              <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
+              <AppLogo />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 <X className="h-6 w-6" />
               </Button>
             </div>
 
             <nav className="flex flex-col gap-6 py-8">
-              <Link href={`/${lang}`} className="text-xl font-medium" onClick={() => setIsMenuOpen(false)}>
-                {dict?.navigation.home || "Home"}
-              </Link>
-              <Link
-                href={`/${lang}/garden-planner`}
+              <NavigationLink
+                href="/"
                 className="text-xl font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {dict?.navigation.gardenPlanner || "Garden Planner"}
-              </Link>
-              <Link
-                href={`/${lang}/growth-tracker`}
+                {t("home")}
+              </NavigationLink>
+              <NavigationLink
+                href="/garden-planner"
                 className="text-xl font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {dict?.navigation.growthTracker || "Growth Tracker"}
-              </Link>
-              <Link
-                href={`/${lang}/planting-calendar`}
+                {t("gardenPlanner")}
+              </NavigationLink>
+              <NavigationLink
+                href="/growth-tracker"
                 className="text-xl font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {dict?.navigation.calendar || "Planting Calendar"}
-              </Link>
-              <Link
-                href={`/${lang}/harvest-calendar`}
+                {t("growthTracker")}
+              </NavigationLink>
+              <NavigationLink
+                href="/planting-calendar"
                 className="text-xl font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {dict?.navigation.harvestCalendar || "Calendario de Cosecha"}
-              </Link>
+                {t("calendar")}
+              </NavigationLink>
+              <NavigationLink
+                href="/harvest-calendar"
+                className="text-xl font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("harvestCalendar")}
+              </NavigationLink>
             </nav>
 
             <div className="mt-auto pb-8">
-              <Button className="w-full" size="lg" onClick={() => setIsMenuOpen(false)}>
-                {dict?.navigation.signIn || "Sign In"}
+              <Button
+                className="w-full"
+                size="lg"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("signIn")}
               </Button>
             </div>
           </div>
         </div>
       )}
     </>
-  )
+  );
 }
-
