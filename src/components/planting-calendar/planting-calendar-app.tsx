@@ -1,39 +1,58 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { MapPin, CalendarIcon, HelpCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import type { Dictionary } from "@/app/[lang]/dictionaries"
+import { useState } from "react";
+import { MapPin, CalendarIcon, HelpCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useTranslations, useLocale } from "next-intl";
+import Image from "next/image";
 
 // Definir tipos para el calendario
-type PlantingActivity = "indoors" | "outdoors" | "harvest"
+type PlantingActivity = "indoors" | "outdoors" | "harvest";
 
 type CalendarItem = {
-  id: string
-  name: string
-  imageUrl?: string
-  activities: Record<string, PlantingActivity[]>
-}
+  id: string;
+  name: string;
+  imageUrl?: string;
+  activities: Record<string, PlantingActivity[]>;
+};
 
 type HardinessZone = {
-  id: string
-  name: string
-  minTemp: number
-  maxTemp: number
-}
+  id: string;
+  name: string;
+  minTemp: number;
+  maxTemp: number;
+};
 
 // Datos de ejemplo para el calendario
 const calendarData: CalendarItem[] = [
   {
     id: "tomato",
     name: "Tomato",
-    imageUrl: "https://images.unsplash.com/photo-1592841200221-a6898f307baa?q=80&w=2070&auto=format&fit=crop",
+    imageUrl:
+      "https://images.unsplash.com/photo-1592841200221-a6898f307baa?q=80&w=2070&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": ["indoors"],
@@ -52,7 +71,8 @@ const calendarData: CalendarItem[] = [
   {
     id: "lettuce",
     name: "Lettuce",
-    imageUrl: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?q=80&w=2076&auto=format&fit=crop",
+    imageUrl:
+      "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?q=80&w=2076&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": ["indoors"],
@@ -71,7 +91,8 @@ const calendarData: CalendarItem[] = [
   {
     id: "carrot",
     name: "Carrot",
-    imageUrl: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=2070&auto=format&fit=crop",
+    imageUrl:
+      "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=2070&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": [],
@@ -90,7 +111,8 @@ const calendarData: CalendarItem[] = [
   {
     id: "pepper",
     name: "Pepper",
-    imageUrl: "https://images.unsplash.com/photo-1563252722-6434563a985d?q=80&w=2070&auto=format&fit=crop",
+    imageUrl:
+      "https://images.unsplash.com/photo-1563252722-6434563a985d?q=80&w=2070&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": ["indoors"],
@@ -109,7 +131,8 @@ const calendarData: CalendarItem[] = [
   {
     id: "cucumber",
     name: "Cucumber",
-    imageUrl: "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?q=80&w=2070&auto=format&fit=crop",
+    imageUrl:
+      "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?q=80&w=2070&auto=format&fit=crop",
     activities: {
       "1": [],
       "2": [],
@@ -125,7 +148,7 @@ const calendarData: CalendarItem[] = [
       "12": [],
     },
   },
-]
+];
 
 // Zonas de rusticidad
 const hardinessZones: HardinessZone[] = [
@@ -142,88 +165,59 @@ const hardinessZones: HardinessZone[] = [
   { id: "11", name: "Zone 11", minTemp: 40, maxTemp: 50 },
   { id: "12", name: "Zone 12", minTemp: 50, maxTemp: 60 },
   { id: "13", name: "Zone 13", minTemp: 60, maxTemp: 70 },
-]
+];
 
 // Función para convertir Fahrenheit a Celsius
 function fahrenheitToCelsius(fahrenheit: number): number {
-  return Math.round(((fahrenheit - 32) * 5) / 9)
+  return Math.round(((fahrenheit - 32) * 5) / 9);
 }
 
-export default function PlantingCalendarApp({
-  lang,
-  dictionary,
-}: {
-  lang: string
-  dictionary?: Dictionary
-}) {
-  const dict = dictionary?.calendar || {
-    title: "Planting Calendar",
-    subtitle: "Find the best times to plant based on your location",
-    selectRegion: "Select your region",
-    detectLocation: "Detect my location",
-    or: "or",
-    selectMonth: "Select month",
-    whatToPlant: "What to plant in",
-    indoors: "Indoors",
-    outdoors: "Outdoors",
-    harvest: "Harvest",
-    january: "January",
-    february: "February",
-    march: "March",
-    april: "April",
-    may: "May",
-    june: "June",
-    july: "July",
-    august: "August",
-    september: "September",
-    october: "October",
-    november: "November",
-    december: "December",
-    locationDetected: "Location detected",
-    hardiness: "Hardiness Zone",
-    customizeCalendar: "Customize calendar for your specific needs",
-    hardinessExplanation:
-      "Hardiness zones are geographical areas defined by the minimum temperatures that plants can survive in.",
-  }
+export default function PlantingCalendarApp() {
+  const t = useTranslations("calendar");
+  const lang = useLocale();
 
   // Estados
-  const [selectedZone, setSelectedZone] = useState<string>("8")
-  const [selectedMonth, setSelectedMonth] = useState<string>((new Date().getMonth() + 1).toString())
-  const [isDetectingLocation, setIsDetectingLocation] = useState(false)
-  const [locationDetected, setLocationDetected] = useState(false)
+  const [selectedZone, setSelectedZone] = useState<string>("8");
+  const [selectedMonth, setSelectedMonth] = useState<string>(
+    (new Date().getMonth() + 1).toString()
+  );
+  const [isDetectingLocation, setIsDetectingLocation] = useState(false);
+  const [locationDetected, setLocationDetected] = useState(false);
 
   // Nombres de los meses
   const months = [
-    dict.january,
-    dict.february,
-    dict.march,
-    dict.april,
-    dict.may,
-    dict.june,
-    dict.july,
-    dict.august,
-    dict.september,
-    dict.october,
-    dict.november,
-    dict.december,
-  ]
+    t("january"),
+    t("february"),
+    t("march"),
+    t("april"),
+    t("may"),
+    t("june"),
+    t("july"),
+    t("august"),
+    t("september"),
+    t("october"),
+    t("november"),
+    t("december"),
+  ];
 
   // Detectar ubicación
   const detectLocation = () => {
-    setIsDetectingLocation(true)
+    setIsDetectingLocation(true);
 
     // Simular detección de ubicación
     setTimeout(() => {
-      setSelectedZone("9")
-      setLocationDetected(true)
-      setIsDetectingLocation(false)
-    }, 1500)
-  }
+      setSelectedZone("9");
+      setLocationDetected(true);
+      setIsDetectingLocation(false);
+    }, 1500);
+  };
 
   // Obtener plantas para el mes seleccionado
   const getPlantsForMonth = (activity: PlantingActivity) => {
-    return calendarData.filter((plant) => plant.activities[selectedMonth]?.includes(activity))
-  }
+    return calendarData.filter((plant) =>
+      plant.activities[selectedMonth]?.includes(activity)
+    );
+  };
 
   // Renderizar el selector de zona y mes
   const renderSelectors = () => {
@@ -232,25 +226,26 @@ export default function PlantingCalendarApp({
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              {dict.selectRegion}
+              {t("selectRegion")}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-5 w-5 rounded-full p-0">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-5 w-5 rounded-full p-0"
+                    >
                       <HelpCircle className="h-4 w-4" />
                       <span className="sr-only">Hardiness Zone Info</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent className="max-w-xs">
-                    <p>
-                      {dict.hardinessExplanation ||
-                        "Hardiness zones are geographical areas defined by the minimum temperatures that plants can survive in."}
-                    </p>
+                    <p>{t("hardinessExplanation")}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </CardTitle>
-            <CardDescription>{dict.hardiness}</CardDescription>
+            <CardDescription>{t("hardiness")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -263,7 +258,9 @@ export default function PlantingCalendarApp({
                     <SelectItem key={zone.id} value={zone.id}>
                       {zone.name} (
                       {lang === "es"
-                        ? `${fahrenheitToCelsius(zone.minTemp)}°C a ${fahrenheitToCelsius(zone.maxTemp)}°C`
+                        ? `${fahrenheitToCelsius(
+                            zone.minTemp
+                          )}°C a ${fahrenheitToCelsius(zone.maxTemp)}°C`
                         : `${zone.minTemp}°F to ${zone.maxTemp}°F`}
                       )
                     </SelectItem>
@@ -272,23 +269,41 @@ export default function PlantingCalendarApp({
               </Select>
 
               <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">{dict.or}</span>
+                <span className="text-sm text-muted-foreground">{t("or")}</span>
               </div>
 
-              <Button variant="outline" className="w-full" onClick={detectLocation} disabled={isDetectingLocation}>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={detectLocation}
+                disabled={isDetectingLocation}
+              >
                 <MapPin className="mr-2 h-4 w-4" />
-                {isDetectingLocation ? "Detecting..." : dict.detectLocation}
+                {isDetectingLocation ? t("detecting") : t("detectLocation")}
               </Button>
 
               {locationDetected && (
                 <Alert>
                   <MapPin className="h-4 w-4" />
-                  <AlertTitle>{dict.locationDetected}</AlertTitle>
+                  <AlertTitle>{t("locationDetected")}</AlertTitle>
                   <AlertDescription>
-                    {dict.hardiness}: {hardinessZones.find((z) => z.id === selectedZone)?.name}
+                    {t("hardiness")}:{" "}
+                    {hardinessZones.find((z) => z.id === selectedZone)?.name}
                     {lang === "es"
-                      ? ` (${fahrenheitToCelsius(hardinessZones.find((z) => z.id === selectedZone)?.minTemp || 0)}°C a ${fahrenheitToCelsius(hardinessZones.find((z) => z.id === selectedZone)?.maxTemp || 0)}°C)`
-                      : ` (${hardinessZones.find((z) => z.id === selectedZone)?.minTemp || 0}°F to ${hardinessZones.find((z) => z.id === selectedZone)?.maxTemp || 0}°F)`}
+                      ? ` (${fahrenheitToCelsius(
+                          hardinessZones.find((z) => z.id === selectedZone)
+                            ?.minTemp || 0
+                        )}°C a ${fahrenheitToCelsius(
+                          hardinessZones.find((z) => z.id === selectedZone)
+                            ?.maxTemp || 0
+                        )}°C)`
+                      : ` (${
+                          hardinessZones.find((z) => z.id === selectedZone)
+                            ?.minTemp || 0
+                        }°F to ${
+                          hardinessZones.find((z) => z.id === selectedZone)
+                            ?.maxTemp || 0
+                        }°F)`}
                   </AlertDescription>
                 </Alert>
               )}
@@ -298,9 +313,9 @@ export default function PlantingCalendarApp({
 
         <Card>
           <CardHeader>
-            <CardTitle>{dict.selectMonth}</CardTitle>
+            <CardTitle>{t("selectMonth")}</CardTitle>
             <CardDescription>
-              {dict.whatToPlant} {months[Number.parseInt(selectedMonth) - 1]}
+              {t("whatToPlant")} {months[Number.parseInt(selectedMonth) - 1]}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -308,7 +323,9 @@ export default function PlantingCalendarApp({
               {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
                 <Button
                   key={month}
-                  variant={selectedMonth === month.toString() ? "default" : "outline"}
+                  variant={
+                    selectedMonth === month.toString() ? "default" : "outline"
+                  }
                   className="h-10 p-0"
                   onClick={() => setSelectedMonth(month.toString())}
                 >
@@ -319,8 +336,8 @@ export default function PlantingCalendarApp({
           </CardContent>
         </Card>
       </div>
-    )
-  }
+    );
+  };
 
   // Renderizar el calendario para el mes seleccionado
   const renderCalendar = () => {
@@ -329,90 +346,123 @@ export default function PlantingCalendarApp({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CalendarIcon className="h-5 w-5" />
-            {months[Number.parseInt(selectedMonth) - 1]} {dict.title}
+            {months[Number.parseInt(selectedMonth) - 1]} {t("title")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="indoors">
             <TabsList className="grid grid-cols-3 mb-4">
-              <TabsTrigger value="indoors">{dict.indoors}</TabsTrigger>
-              <TabsTrigger value="outdoors">{dict.outdoors}</TabsTrigger>
-              <TabsTrigger value="harvest">{dict.harvest}</TabsTrigger>
+              <TabsTrigger value="indoors">{t("indoors")}</TabsTrigger>
+              <TabsTrigger value="outdoors">{t("outdoors")}</TabsTrigger>
+              <TabsTrigger value="harvest">{t("harvest")}</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="indoors">{renderPlantList("indoors")}</TabsContent>
+            <TabsContent value="indoors">
+              {renderPlantList("indoors")}
+            </TabsContent>
 
-            <TabsContent value="outdoors">{renderPlantList("outdoors")}</TabsContent>
+            <TabsContent value="outdoors">
+              {renderPlantList("outdoors")}
+            </TabsContent>
 
-            <TabsContent value="harvest">{renderPlantList("harvest")}</TabsContent>
+            <TabsContent value="harvest">
+              {renderPlantList("harvest")}
+            </TabsContent>
           </Tabs>
         </CardContent>
       </Card>
-    )
+    );
+  };
+
+  // Devuelve el emoji correspondiente a la planta
+  function getPlantEmoji(plantId: string) {
+    switch (plantId) {
+      case "tomato":
+        return "🍅";
+      case "lettuce":
+        return "🥬";
+      case "carrot":
+        return "🥕";
+      case "pepper":
+        return "🌶️";
+      case "cucumber":
+        return "🥒";
+      default:
+        return "🌱";
+    }
   }
 
   // Renderizar la lista de plantas para una actividad
   const renderPlantList = (activity: PlantingActivity) => {
-    const plants = getPlantsForMonth(activity)
+    const plants = getPlantsForMonth(activity);
 
     if (plants.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center h-[200px] border rounded-lg bg-muted/20">
           <p className="text-muted-foreground">
-            {`No plants to ${activity} in ${months[Number.parseInt(selectedMonth) - 1]} for Zone ${selectedZone}`}
+            {t("noPlants", {
+              activity,
+              month: months[Number.parseInt(selectedMonth) - 1],
+              zone: selectedZone,
+              defaultValue: `No plants to ${activity} in ${
+                months[Number.parseInt(selectedMonth) - 1]
+              } for Zone ${selectedZone}`,
+            })}
           </p>
         </div>
-      )
+      );
     }
 
     return (
       <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-        {plants.map((plant) => (
-          <div key={plant.id} className="flex items-center p-3 border rounded-lg">
-            <div className="mr-3 h-12 w-12 overflow-hidden rounded-full">
-              {plant.imageUrl ? (
-                <img
-                  src={plant.imageUrl || "/placeholder.svg"}
-                  alt={plant.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center bg-muted text-2xl">
-                  {plant.id === "tomato"
-                    ? "🍅"
-                    : plant.id === "lettuce"
-                      ? "🥬"
-                      : plant.id === "carrot"
-                        ? "🥕"
-                        : plant.id === "pepper"
-                          ? "🌶️"
-                          : plant.id === "cucumber"
-                            ? "🥒"
-                            : "🌱"}
+        {plants.map((plant) => {
+          const emoji = getPlantEmoji(plant.id);
+          return (
+            <div
+              key={plant.id}
+              className="flex items-center p-3 border rounded-lg"
+            >
+              <div className="mr-3 h-12 w-12 overflow-hidden rounded-full">
+                {plant.imageUrl ? (
+                  <Image
+                    src={plant.imageUrl || "/placeholder.svg"}
+                    alt={plant.name}
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-cover"
+                    style={{ objectFit: "cover" }}
+                    unoptimized={plant.imageUrl.startsWith("http")}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-muted text-2xl">
+                    {emoji}
+                  </div>
+                )}
+              </div>
+              <div>
+                <h3 className="font-medium">{plant.name}</h3>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {plant.activities[selectedMonth].map((act) => (
+                    <Badge
+                      key={act}
+                      variant={act === activity ? "default" : "outline"}
+                    >
+                      {t(act)}
+                    </Badge>
+                  ))}
                 </div>
-              )}
-            </div>
-            <div>
-              <h3 className="font-medium">{plant.name}</h3>
-              <div className="flex flex-wrap gap-1 mt-1">
-                {plant.activities[selectedMonth].map((act) => (
-                  <Badge key={act} variant={act === activity ? "default" : "outline"}>
-                    {dict[act]}
-                  </Badge>
-                ))}
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="space-y-6">
       {renderSelectors()}
       {renderCalendar()}
     </div>
-  )
+  );
 }
-
