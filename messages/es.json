@@ -1,0 +1,42 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "plantDatabase": "Base de Plantas",
+    "gardenPlanner": "Planificador",
+    "growthTracker": "Seguimiento",
+    "calendar": "Calendario de Siembra",
+    "about": "Acerca de",
+    "signIn": "Iniciar Sesión",
+    "harvestCalendar": "Calendario de Cosecha"
+  },
+  "harvestCalendar": {
+    "title": "Calendario de Cosecha",
+    "subtitle": "Calcula tu calendario de cosecha según tu ubicación y siembra."
+  },
+  "hero": {
+    "title": "Cultiva Mejor en Compañía",
+    "subtitle": "Descubre las plantas compañeras perfectas para tu huerto con nuestro asistente de asociación de cultivos con IA.",
+    "searchPlaceholder": "Busca un cultivo (ej., tomate)",
+    "findCompanions": "Buscar Compañeros"
+  },
+  "howItWorks": {
+    "title": "Cómo Funciona",
+    "subtitle": "Nuestra app con IA te ayuda a crear el huerto perfecto sugiriendo plantas compañeras que crecen bien juntas.",
+    "step1": {
+      "title": "1. Selecciona tus Cultivos",
+      "description": "Elige las plantas que quieres cultivar en tu huerto."
+    },
+    "step2": {
+      "title": "2. Obtén Recomendaciones de IA",
+      "description": "Nuestra IA sugiere las mejores plantas compañeras basadas en datos científicos."
+    },
+    "step3": {
+      "title": "3. Planifica tu Huerto",
+      "description": "Organiza tus plantas de manera óptima usando nuestro planificador interactivo."
+    }
+  },
+  "cropAssistant": {
+    "title": "Asistente de Cultivos",
+    "description": "Pregúntame sobre qué plantas crecen bien juntas"
+  }
+}

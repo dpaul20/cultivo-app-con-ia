@@ -1,0 +1,42 @@
+{
+  "navigation": {
+    "home": "Home",
+    "plantDatabase": "Plant Database",
+    "gardenPlanner": "Garden Planner",
+    "growthTracker": "Growth Tracker",
+    "calendar": "Planting Calendar",
+    "about": "About",
+    "signIn": "Sign In",
+    "harvestCalendar": "Harvest Calendar"
+  },
+  "harvestCalendar": {
+    "title": "Harvest Calendar",
+    "subtitle": "Calculate your harvest calendar based on your location and planting."
+  },
+  "hero": {
+    "title": "Grow Better Together",
+    "subtitle": "Discover the perfect plant companions for your garden with our AI-powered crop association assistant.",
+    "searchPlaceholder": "Search for a crop (e.g., tomato)",
+    "findCompanions": "Find Companions"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Our AI-powered app helps you create the perfect garden by suggesting companion plants that grow well together.",
+    "step1": {
+      "title": "1. Select Your Crops",
+      "description": "Choose the plants you want to grow in your garden."
+    },
+    "step2": {
+      "title": "2. Get AI Recommendations",
+      "description": "Our AI suggests the best companion plants based on scientific data."
+    },
+    "step3": {
+      "title": "3. Plan Your Garden",
+      "description": "Arrange your plants optimally using our interactive garden planner."
+    }
+  },
+  "cropAssistant": {
+    "title": "Crop Assistant",
+    "description": "Ask me about which plants grow well together"
+  }
+}
