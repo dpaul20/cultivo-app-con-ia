@@ -1,4 +1,5 @@
-import { Locale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 
@@ -18,11 +19,11 @@ import PopularCrops from "@/components/popular-crops";
 import SiteHeader from "@/components/layout/site-header-simple";
 import SiteFooter from "@/components/layout/site-footer";
 
-export default function Home({ params }: PageProps<"/[locale]">) {
+export default function HomePage({ params }: Readonly<PageProps<"/[locale]">>) {
   const { locale } = use(params);
 
   // Enable static rendering
-  setRequestLocale(locale as Locale);
+  setRequestLocale(locale);
 
   const t = useTranslations("HomePage");
 
@@ -59,10 +60,13 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                   </Button>
                 </div>
               </div>
-              <img
+              <Image
                 alt="Garden with companion planting"
                 className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
                 src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=2070&auto=format&fit=crop"
+                width={800}
+                height={450}
+                priority
               />
             </div>
           </div>
@@ -89,10 +93,12 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <img
+                  <Image
                     alt="Select crops illustration"
                     className="aspect-video w-full rounded-lg object-cover"
                     src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?q=80&w=2071&auto=format&fit=crop"
+                    width={800}
+                    height={450}
                   />
                 </CardContent>
               </Card>
@@ -104,10 +110,12 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <img
+                  <Image
                     alt="AI recommendations illustration"
                     className="aspect-video w-full rounded-lg object-cover"
                     src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=2070&auto=format&fit=crop"
+                    width={800}
+                    height={450}
                   />
                 </CardContent>
               </Card>
@@ -119,10 +127,12 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <img
+                  <Image
                     alt="Garden planner illustration"
                     className="aspect-video w-full rounded-lg object-cover"
                     src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=2070&auto=format&fit=crop"
+                    width={800}
+                    height={450}
                   />
                 </CardContent>
               </Card>
