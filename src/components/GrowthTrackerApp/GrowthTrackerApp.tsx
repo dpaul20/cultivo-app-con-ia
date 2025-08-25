@@ -1,13 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { addDays, format } from "date-fns"
-import { Camera, Plus, Droplets, Sprout, FileText, Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState } from "react";
+import { addDays, format } from "date-fns";
+import { Camera, Plus, Droplets, Sprout, FileText, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
   DialogContent,
@@ -15,48 +22,59 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Textarea } from "@/components/ui/textarea"
-import { useTranslations, useLocale } from "next-intl"
-import Image from "next/image"
-import { es, enUS } from "date-fns/locale"
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
+import { useTranslations, useLocale } from "next-intl";
+import Image from "next/image";
+import { es, enUS } from "date-fns/locale";
 
 // Definir tipos para las plantas
-type GrowthStage = "seedling" | "vegetative" | "flowering" | "fruiting" | "harvesting"
-type PlantHealth = "healthy" | "needsAttention" | "unhealthy"
+type GrowthStage =
+  | "seedling"
+  | "vegetative"
+  | "flowering"
+  | "fruiting"
+  | "harvesting";
+type PlantHealth = "healthy" | "needsAttention" | "unhealthy";
 
 type PlantNote = {
-  id: string
-  date: Date
-  text: string
-}
+  id: string;
+  date: Date;
+  text: string;
+};
 
 type PlantPhoto = {
-  id: string
-  date: Date
-  url: string
-}
+  id: string;
+  date: Date;
+  url: string;
+};
 
 type Plant = {
-  id: string
-  name: string
-  type: string
-  plantingDate: Date
-  lastWatered: Date
-  nextWatering: Date
-  growthStage: GrowthStage
-  health: PlantHealth
-  notes: PlantNote[]
-  photos: PlantPhoto[]
-}
+  id: string;
+  name: string;
+  type: string;
+  plantingDate: Date;
+  lastWatered: Date;
+  nextWatering: Date;
+  growthStage: GrowthStage;
+  health: PlantHealth;
+  notes: PlantNote[];
+  photos: PlantPhoto[];
+};
 
 export default function GrowthTrackerApp() {
-  const t = useTranslations('growthTracker')
-  const lang = useLocale()
-  const localeObj = lang === 'es' ? es : enUS
+  const t = useTranslations("growthTracker");
+  const lang = useLocale();
+  const localeObj = lang === "es" ? es : enUS;
 
   // Estados
   const [plants, setPlants] = useState<Plant[]>([
@@ -70,8 +88,16 @@ export default function GrowthTrackerApp() {
       growthStage: "vegetative",
       health: "healthy",
       notes: [
-        { id: "n1", date: new Date(2025, 2, 15), text: "Planted seeds in starter pots" },
-        { id: "n2", date: new Date(2025, 3, 1), text: "First true leaves appeared" },
+        {
+          id: "n1",
+          date: new Date(2025, 2, 15),
+          text: "Planted seeds in starter pots",
+        },
+        {
+          id: "n2",
+          date: new Date(2025, 3, 1),
+          text: "First true leaves appeared",
+        },
       ],
       photos: [
         {
@@ -95,7 +121,13 @@ export default function GrowthTrackerApp() {
       nextWatering: addDays(new Date(2025, 3, 14), 1),
       growthStage: "seedling",
       health: "needsAttention",
-      notes: [{ id: "n3", date: new Date(2025, 3, 1), text: "Direct sowed seeds in garden bed" }],
+      notes: [
+        {
+          id: "n3",
+          date: new Date(2025, 3, 1),
+          text: "Direct sowed seeds in garden bed",
+        },
+      ],
       photos: [
         {
           id: "p3",
@@ -104,28 +136,28 @@ export default function GrowthTrackerApp() {
         },
       ],
     },
-  ])
+  ]);
 
-  const [selectedPlant, setSelectedPlant] = useState<string | null>(null)
-  const [isAddingPlant, setIsAddingPlant] = useState(false)
-  const [isAddingNote, setIsAddingNote] = useState(false)
-  const [newNote, setNewNote] = useState("")
+  const [selectedPlant, setSelectedPlant] = useState<string | null>(null);
+  const [isAddingPlant, setIsAddingPlant] = useState(false);
+  const [isAddingNote, setIsAddingNote] = useState(false);
+  const [newNote, setNewNote] = useState("");
 
   // Formulario para nueva planta
-  const [newPlantName, setNewPlantName] = useState("")
-  const [newPlantType, setNewPlantType] = useState("")
-  const [newPlantDate, setNewPlantDate] = useState("")
+  const [newPlantName, setNewPlantName] = useState("");
+  const [newPlantType, setNewPlantType] = useState("");
+  const [newPlantDate, setNewPlantDate] = useState("");
 
   // Obtener la planta seleccionada
   const getSelectedPlant = () => {
-    return plants.find((p) => p.id === selectedPlant)
-  }
+    return plants.find((p) => p.id === selectedPlant);
+  };
 
   // Añadir una nueva planta
   const addPlant = () => {
-    if (!newPlantName || !newPlantType || !newPlantDate) return
+    if (!newPlantName || !newPlantType || !newPlantDate) return;
 
-    const plantingDate = new Date(newPlantDate)
+    const plantingDate = new Date(newPlantDate);
     const newPlant: Plant = {
       id: Date.now().toString(),
       name: newPlantName,
@@ -135,27 +167,33 @@ export default function GrowthTrackerApp() {
       nextWatering: addDays(new Date(), 2),
       growthStage: "seedling",
       health: "healthy",
-      notes: [{ id: `n-${Date.now()}`, date: new Date(), text: `Started tracking ${newPlantName}` }],
+      notes: [
+        {
+          id: `n-${Date.now()}`,
+          date: new Date(),
+          text: `Started tracking ${newPlantName}`,
+        },
+      ],
       photos: [],
-    }
+    };
 
-    setPlants([...plants, newPlant])
-    setNewPlantName("")
-    setNewPlantType("")
-    setNewPlantDate("")
-    setIsAddingPlant(false)
-    setSelectedPlant(newPlant.id)
-  }
+    setPlants([...plants, newPlant]);
+    setNewPlantName("");
+    setNewPlantType("");
+    setNewPlantDate("");
+    setIsAddingPlant(false);
+    setSelectedPlant(newPlant.id);
+  };
 
   // Añadir una nota a la planta seleccionada
   const addNote = () => {
-    if (!selectedPlant || !newNote) return
+    if (!selectedPlant || !newNote) return;
 
     const note: PlantNote = {
       id: `n-${Date.now()}`,
       date: new Date(),
       text: newNote,
-    }
+    };
 
     setPlants(
       plants.map((plant) => {
@@ -163,15 +201,15 @@ export default function GrowthTrackerApp() {
           return {
             ...plant,
             notes: [...plant.notes, note],
-          }
+          };
         }
-        return plant
-      }),
-    )
+        return plant;
+      })
+    );
 
-    setNewNote("")
-    setIsAddingNote(false)
-  }
+    setNewNote("");
+    setIsAddingNote(false);
+  };
 
   // Regar la planta
   const waterPlant = (plantId: string) => {
@@ -182,13 +220,14 @@ export default function GrowthTrackerApp() {
             ...plant,
             lastWatered: new Date(),
             nextWatering: addDays(new Date(), 2),
-            health: plant.health === "unhealthy" ? "needsAttention" : plant.health,
-          }
+            health:
+              plant.health === "unhealthy" ? "needsAttention" : plant.health,
+          };
         }
-        return plant
-      }),
-    )
-  }
+        return plant;
+      })
+    );
+  };
 
   // Cambiar la etapa de crecimiento
   const updateGrowthStage = (plantId: string, stage: GrowthStage) => {
@@ -198,12 +237,12 @@ export default function GrowthTrackerApp() {
           return {
             ...plant,
             growthStage: stage,
-          }
+          };
         }
-        return plant
-      }),
-    )
-  }
+        return plant;
+      })
+    );
+  };
 
   // Cambiar el estado de salud
   const updateHealth = (plantId: string, health: PlantHealth) => {
@@ -213,30 +252,32 @@ export default function GrowthTrackerApp() {
           return {
             ...plant,
             health,
-          }
+          };
         }
-        return plant
-      }),
-    )
-  }
+        return plant;
+      })
+    );
+  };
 
   // Eliminar una planta
   const deletePlant = (plantId: string) => {
-    setPlants(plants.filter((plant) => plant.id !== plantId))
+    setPlants(plants.filter((plant) => plant.id !== plantId));
     if (selectedPlant === plantId) {
-      setSelectedPlant(null)
+      setSelectedPlant(null);
     }
-  }
+  };
 
   // Renderizar la lista de plantas
   const renderPlantList = () => {
     if (plants.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center h-[300px] border rounded-lg bg-muted/20">
-          <p className="text-muted-foreground mb-4">{t('noPlants')}</p>
-          <Button onClick={() => setIsAddingPlant(true)}>{t('addPlant')}</Button>
+          <p className="text-muted-foreground mb-4">{t("noPlants")}</p>
+          <Button onClick={() => setIsAddingPlant(true)}>
+            {t("addPlant")}
+          </Button>
         </div>
-      )
+      );
     }
 
     return (
@@ -244,7 +285,9 @@ export default function GrowthTrackerApp() {
         {plants.map((plant) => (
           <Card
             key={plant.id}
-            className={`cursor-pointer hover:shadow-md transition-shadow ${selectedPlant === plant.id ? "ring-2 ring-primary" : ""}`}
+            className={`cursor-pointer hover:shadow-md transition-shadow ${
+              selectedPlant === plant.id ? "ring-2 ring-primary" : ""
+            }`}
             onClick={() => setSelectedPlant(plant.id)}
           >
             <div className="absolute inset-0 rounded-lg overflow-hidden opacity-10">
@@ -267,9 +310,12 @@ export default function GrowthTrackerApp() {
                   <CardDescription>{plant.type}</CardDescription>
                 </div>
                 {(() => {
-                  let badgeVariant: "default" | "outline" | "destructive" = "default";
-                  if (plant.health === "needsAttention") badgeVariant = "outline";
-                  else if (plant.health === "unhealthy") badgeVariant = "destructive";
+                  let badgeVariant: "default" | "outline" | "destructive" =
+                    "default";
+                  if (plant.health === "needsAttention")
+                    badgeVariant = "outline";
+                  else if (plant.health === "unhealthy")
+                    badgeVariant = "destructive";
                   return (
                     <Badge variant={badgeVariant}>{t(plant.health)}</Badge>
                   );
@@ -279,29 +325,44 @@ export default function GrowthTrackerApp() {
             <CardContent className="relative z-10">
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{t('plantingDate')}:</span>
-                  <span>{format(plant.plantingDate, "PP", { locale: localeObj })}</span>
+                  <span className="text-muted-foreground">
+                    {t("plantingDate")}:
+                  </span>
+                  <span>
+                    {format(plant.plantingDate, "PP", { locale: localeObj })}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{t('lastWatered')}:</span>
-                  <span>{format(plant.lastWatered, "PP", { locale: localeObj })}</span>
+                  <span className="text-muted-foreground">
+                    {t("lastWatered")}:
+                  </span>
+                  <span>
+                    {format(plant.lastWatered, "PP", { locale: localeObj })}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">{t('growthStage')}:</span>
+                  <span className="text-muted-foreground">
+                    {t("growthStage")}:
+                  </span>
                   <span>{t(plant.growthStage)}</span>
                 </div>
                 <div className="pt-2">
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-muted-foreground">{t('nextWatering')}:</span>
-                    <span>{format(plant.nextWatering, "PP", { locale: localeObj })}</span>
+                    <span className="text-muted-foreground">
+                      {t("nextWatering")}:
+                    </span>
+                    <span>
+                      {format(plant.nextWatering, "PP", { locale: localeObj })}
+                    </span>
                   </div>
                   <Progress
                     value={Math.max(
                       0,
                       100 -
                         ((plant.nextWatering.getTime() - new Date().getTime()) /
-                          (plant.nextWatering.getTime() - plant.lastWatered.getTime())) *
-                          100,
+                          (plant.nextWatering.getTime() -
+                            plant.lastWatered.getTime())) *
+                          100
                     )}
                     className="h-2"
                   />
@@ -309,9 +370,14 @@ export default function GrowthTrackerApp() {
               </div>
             </CardContent>
             <CardFooter className="pt-0 relative z-10">
-              <Button variant="outline" size="sm" className="w-full" onClick={() => waterPlant(plant.id)}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => waterPlant(plant.id)}
+              >
                 <Droplets className="mr-2 h-4 w-4" />
-                {t('waterNow')}
+                {t("waterNow")}
               </Button>
             </CardFooter>
           </Card>
@@ -322,23 +388,28 @@ export default function GrowthTrackerApp() {
           onClick={() => setIsAddingPlant(true)}
         >
           <Plus className="h-8 w-8 mb-2 text-muted-foreground" />
-          <p className="text-muted-foreground">{t('addPlant')}</p>
+          <p className="text-muted-foreground">{t("addPlant")}</p>
         </Card>
       </div>
-    )
-  }
+    );
+  };
 
   // Renderizar los detalles de la planta seleccionada
   const renderPlantDetails = () => {
-    const plant = getSelectedPlant()
-    if (!plant) return null
+    const plant = getSelectedPlant();
+    if (!plant) return null;
 
     return (
       <Card className="mt-6">
         <CardHeader>
           <div className="flex justify-between items-center">
             <CardTitle>{plant.name}</CardTitle>
-            <Button variant="ghost" size="icon" className="text-destructive" onClick={() => deletePlant(plant.id)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-destructive"
+              onClick={() => deletePlant(plant.id)}
+            >
               <Trash2 className="h-5 w-5" />
             </Button>
           </div>
@@ -348,41 +419,60 @@ export default function GrowthTrackerApp() {
           <Tabs defaultValue="info">
             <TabsList className="grid grid-cols-3 mb-4">
               <TabsTrigger value="info">Info</TabsTrigger>
-              <TabsTrigger value="notes">{t('notes')}</TabsTrigger>
-              <TabsTrigger value="photos">{t('photos', { defaultValue: 'Photos' })}</TabsTrigger>
+              <TabsTrigger value="notes">{t("notes")}</TabsTrigger>
+              <TabsTrigger value="photos">
+                {t("photos", { defaultValue: "Photos" })}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="info" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <Label>{t('growthStage')}</Label>
+                  <Label>{t("growthStage")}</Label>
                   <Select
                     value={plant.growthStage}
-                    onValueChange={(value) => updateGrowthStage(plant.id, value as GrowthStage)}
+                    onValueChange={(value) =>
+                      updateGrowthStage(plant.id, value as GrowthStage)
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="seedling">{t('seedling')}</SelectItem>
-                      <SelectItem value="vegetative">{t('vegetative')}</SelectItem>
-                      <SelectItem value="flowering">{t('flowering')}</SelectItem>
-                      <SelectItem value="fruiting">{t('fruiting')}</SelectItem>
-                      <SelectItem value="harvesting">{t('harvesting')}</SelectItem>
+                      <SelectItem value="seedling">{t("seedling")}</SelectItem>
+                      <SelectItem value="vegetative">
+                        {t("vegetative")}
+                      </SelectItem>
+                      <SelectItem value="flowering">
+                        {t("flowering")}
+                      </SelectItem>
+                      <SelectItem value="fruiting">{t("fruiting")}</SelectItem>
+                      <SelectItem value="harvesting">
+                        {t("harvesting")}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div>
-                  <Label>{t('plantHealth')}</Label>
-                  <Select value={plant.health} onValueChange={(value) => updateHealth(plant.id, value as PlantHealth)}>
+                  <Label>{t("plantHealth")}</Label>
+                  <Select
+                    value={plant.health}
+                    onValueChange={(value) =>
+                      updateHealth(plant.id, value as PlantHealth)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="healthy">{t('healthy')}</SelectItem>
-                      <SelectItem value="needsAttention">{t('needsAttention')}</SelectItem>
-                      <SelectItem value="unhealthy">{t('unhealthy')}</SelectItem>
+                      <SelectItem value="healthy">{t("healthy")}</SelectItem>
+                      <SelectItem value="needsAttention">
+                        {t("needsAttention")}
+                      </SelectItem>
+                      <SelectItem value="unhealthy">
+                        {t("unhealthy")}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -391,11 +481,11 @@ export default function GrowthTrackerApp() {
               <div className="flex gap-2">
                 <Button className="flex-1" onClick={() => waterPlant(plant.id)}>
                   <Droplets className="mr-2 h-4 w-4" />
-                  {t('waterNow')}
+                  {t("waterNow")}
                 </Button>
                 <Button variant="outline" className="flex-1">
                   <Sprout className="mr-2 h-4 w-4" />
-                  {t('fertilizeNow')}
+                  {t("fertilizeNow")}
                 </Button>
               </div>
             </TabsContent>
@@ -403,13 +493,20 @@ export default function GrowthTrackerApp() {
             <TabsContent value="notes">
               <div className="space-y-4">
                 {plant.notes.length === 0 ? (
-                  <p className="text-muted-foreground text-center py-4">{t('noNotes', { name: plant.name, defaultValue: `No notes yet. Add your first note about ${plant.name}.` })}</p>
+                  <p className="text-muted-foreground text-center py-4">
+                    {t("noNotes", {
+                      name: plant.name,
+                      defaultValue: `No notes yet. Add your first note about ${plant.name}.`,
+                    })}
+                  </p>
                 ) : (
                   <div className="space-y-3">
                     {plant.notes.map((note) => (
                       <div key={note.id} className="border rounded-lg p-3">
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-xs text-muted-foreground">{format(note.date, "PPp", { locale: localeObj })}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {format(note.date, "PPp", { locale: localeObj })}
+                          </span>
                         </div>
                         <p className="text-sm">{note.text}</p>
                       </div>
@@ -417,9 +514,13 @@ export default function GrowthTrackerApp() {
                   </div>
                 )}
 
-                <Button variant="outline" className="w-full" onClick={() => setIsAddingNote(true)}>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => setIsAddingNote(true)}
+                >
                   <FileText className="mr-2 h-4 w-4" />
-                  {t('addNote')}
+                  {t("addNote")}
                 </Button>
               </div>
             </TabsContent>
@@ -427,11 +528,19 @@ export default function GrowthTrackerApp() {
             <TabsContent value="photos">
               <div className="space-y-4">
                 {plant.photos.length === 0 ? (
-                  <p className="text-muted-foreground text-center py-4">{t('noPhotos', { name: plant.name, defaultValue: `No photos yet. Add your first photo of ${plant.name}.` })}</p>
+                  <p className="text-muted-foreground text-center py-4">
+                    {t("noPhotos", {
+                      name: plant.name,
+                      defaultValue: `No photos yet. Add your first photo of ${plant.name}.`,
+                    })}
+                  </p>
                 ) : (
                   <div className="grid grid-cols-2 gap-3">
                     {plant.photos.map((photo) => (
-                      <div key={photo.id} className="border rounded-lg overflow-hidden">
+                      <div
+                        key={photo.id}
+                        className="border rounded-lg overflow-hidden"
+                      >
                         <Image
                           src={photo.url || "/placeholder.svg"}
                           alt={plant.name}
@@ -441,7 +550,9 @@ export default function GrowthTrackerApp() {
                           style={{ objectFit: "cover" }}
                         />
                         <div className="p-2">
-                          <span className="text-xs text-muted-foreground">{format(photo.date, "PP", { locale: localeObj })}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {format(photo.date, "PP", { locale: localeObj })}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -450,15 +561,15 @@ export default function GrowthTrackerApp() {
 
                 <Button variant="outline" className="w-full">
                   <Camera className="mr-2 h-4 w-4" />
-                  {t('uploadPhoto')}
+                  {t("uploadPhoto")}
                 </Button>
               </div>
             </TabsContent>
           </Tabs>
         </CardContent>
       </Card>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -468,25 +579,38 @@ export default function GrowthTrackerApp() {
       <Dialog open={isAddingPlant} onOpenChange={setIsAddingPlant}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t('addPlant')}</DialogTitle>
-            <DialogDescription>{t('subtitle')}</DialogDescription>
+            <DialogTitle>{t("addPlant")}</DialogTitle>
+            <DialogDescription>{t("subtitle")}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="name">{t('plantName')}</Label>
-              <Input id="name" value={newPlantName} onChange={(e) => setNewPlantName(e.target.value)} />
+              <Label htmlFor="name">{t("plantName")}</Label>
+              <Input
+                id="name"
+                value={newPlantName}
+                onChange={(e) => setNewPlantName(e.target.value)}
+              />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="type">{t('plantType')}</Label>
-              <Input id="type" value={newPlantType} onChange={(e) => setNewPlantType(e.target.value)} />
+              <Label htmlFor="type">{t("plantType")}</Label>
+              <Input
+                id="type"
+                value={newPlantType}
+                onChange={(e) => setNewPlantType(e.target.value)}
+              />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="date">{t('plantingDate')}</Label>
-              <Input id="date" type="date" value={newPlantDate} onChange={(e) => setNewPlantDate(e.target.value)} />
+              <Label htmlFor="date">{t("plantingDate")}</Label>
+              <Input
+                id="date"
+                type="date"
+                value={newPlantDate}
+                onChange={(e) => setNewPlantDate(e.target.value)}
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={addPlant}>{t('addPlant')}</Button>
+            <Button onClick={addPlant}>{t("addPlant")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -494,7 +618,7 @@ export default function GrowthTrackerApp() {
       <Dialog open={isAddingNote} onOpenChange={setIsAddingNote}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t('addNote')}</DialogTitle>
+            <DialogTitle>{t("addNote")}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <Textarea
@@ -505,11 +629,10 @@ export default function GrowthTrackerApp() {
             />
           </div>
           <DialogFooter>
-            <Button onClick={addNote}>{t('addNote')}</Button>
+            <Button onClick={addNote}>{t("addNote")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }
-

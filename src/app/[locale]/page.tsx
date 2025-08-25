@@ -14,10 +14,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import CropAssistant from "@/components/crop-assistant";
-import PopularCrops from "@/components/popular-crops";
-import SiteHeader from "@/components/layout/site-header-simple";
-import SiteFooter from "@/components/layout/site-footer";
+import CropAssistant from "@/components/CropAssistant";
+import PopularCrops from "@/components/PopularCrops";
+import { SiteFooter, SiteHeader } from "@/components/Layout";
 
 export default function HomePage({ params }: Readonly<PageProps<"/[locale]">>) {
   const { locale } = use(params);

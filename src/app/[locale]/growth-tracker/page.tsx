@@ -1,7 +1,7 @@
-import SiteHeader from "@/components/layout/site-header-simple";
-import SiteFooter from "@/components/layout/site-footer";
-import GrowthTrackerApp from "@/components/growth-tracker/growth-tracker-app";
+import { SiteFooter, SiteHeader } from "@/components/Layout";
+
 import { useTranslations } from "next-intl";
+import { GrowthTrackerApp } from "@/components/GrowthTrackerApp";
 
 export default function GrowthTrackerPage() {
   const t = useTranslations("growthTracker");

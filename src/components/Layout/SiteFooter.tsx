@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { AppLogo } from "@/components/custom/app-logo"
 import { useTranslations } from "next-intl";
+import { AppLogo } from "../Common";
 
 
 export default function SiteFooter() {

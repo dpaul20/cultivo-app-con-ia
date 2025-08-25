@@ -21,7 +21,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useTranslations, useLocale } from "next-intl";
-import { AssistantAvatar } from "@/components/custom/assistant-avatar";
+import { AssistantAvatar } from "./Common";
 
 type Message = {
   role: "user" | "assistant";

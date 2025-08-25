@@ -1,6 +1,5 @@
-import SiteHeader from "@/components/layout/site-header-simple";
-import SiteFooter from "@/components/layout/site-footer";
-import HarvestCalendarApp from "@/components/harvest-calendar/harvest-calendar-app";
+import { SiteFooter, SiteHeader } from "@/components/Layout";
+import HarvestCalendarApp from "@/components/HarvestCalendarApp/HarvestCalendarApp";
 import { useTranslations } from "next-intl";
 
 export default function HarvestCalendarPage() {

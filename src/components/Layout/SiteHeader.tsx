@@ -7,8 +7,8 @@ import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // Actualizar la importación del AppLogo
-import { AppLogo } from "@/components/custom/app-logo";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import { AppLogo } from "../Common";
 
 export default function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

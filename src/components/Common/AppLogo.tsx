@@ -1,7 +1,6 @@
 import { Sprout } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-
-export function AppLogo() {
+export default function AppLogo() {
   return (
     <Link href="/" className="flex items-center gap-2">
       <div className="relative w-8 h-8 flex items-center justify-center">
@@ -12,4 +11,3 @@ export function AppLogo() {
     </Link>
   );
 }
-

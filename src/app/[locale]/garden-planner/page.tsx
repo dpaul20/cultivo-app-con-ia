@@ -1,7 +1,6 @@
-import SiteHeader from "@/components/layout/site-header-simple";
-import SiteFooter from "@/components/layout/site-footer";
-import GardenPlannerApp from "@/components/garden-planner/garden-planner-app";
+import { SiteFooter, SiteHeader } from "@/components/Layout";
 import { useTranslations } from "next-intl";
+import { GardenPlannerApp } from "@/components/GardenPlannerApp";
 
 export default function GardenPlannerPage() {
   const t = useTranslations("gardenPlanner");
