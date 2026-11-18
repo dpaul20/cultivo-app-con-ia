@@ -8,13 +8,16 @@ import { basename, resolve } from "node:path";
 function realName(filePath) {
   let full = resolve(filePath);
   if (existsSync(full)) {
-    try {
-      full = realpathSync.native(full);
-    } catch {
-      // Keep the resolved path if the real path cannot be read.
-    }
+    // Throws for an existing file whose real path cannot be read; the caller
+    // treats that as a block (fail closed).
+    full = realpathSync.native(full);
   }
-  return basename(full).toLowerCase();
+  // Windows ignores NTFS stream suffixes (":stream") and trailing dots/spaces,
+  // so ".env.local:x" or "package-lock.json." would write the protected file.
+  return basename(full)
+    .split(":")[0]
+    .replace(/[. ]+$/, "")
+    .toLowerCase();
 }
 
 let raw = "";
@@ -29,7 +32,13 @@ process.stdin.on("end", () => {
   }
   if (!filePath) process.exit(0);
 
-  const name = realName(filePath);
+  let name;
+  try {
+    name = realName(filePath);
+  } catch {
+    console.error(`Blocked: could not resolve the real path of ${filePath}.`);
+    process.exit(2);
+  }
   if (name.startsWith(".env") && name !== ".env.example") {
     console.error(`Blocked: ${basename(filePath)} holds secrets. Ask the user to edit it manually.`);
     process.exit(2);
